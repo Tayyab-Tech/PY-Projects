@@ -113,14 +113,43 @@ def check_collisions(snake):
 
     return False
 
+def restart_game():
+    global snake, food, score, direction
+
+    canvas.delete(ALL)
+    score = 0
+    direction = 'down'
+    label.config(text="Score {}".format(score))
+
+    snake = Snake()
+    food = Food()
+
+    next_turn(snake, food)
+
 
 def game_over():
     canvas.delete(ALL)
-    canvas.create_text(canvas.winfo_width() / 2,
-                       canvas.winfo_height() / 2,
-                       font=("consolas", 32),
-                       text=f"GAME OVER\nScore: {score}",
-                       fill="red")
+
+    canvas.create_text(
+        canvas.winfo_width() / 2,
+        canvas.winfo_height() / 2 - 50,
+        font=("consolas", 32),
+        text=f"GAME OVER\nScore: {score}",
+        fill="red"
+    )
+
+    replay_button = Button(
+        window,
+        text="Replay",
+        font=("consolas", 20),
+        command=lambda: [replay_button.destroy(), restart_game()]
+    )
+
+    canvas.create_window(
+        canvas.winfo_width() / 2,
+        canvas.winfo_height() / 2 + 80,
+        window=replay_button
+    )
 
 
 window = Tk()
