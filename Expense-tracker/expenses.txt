@@ -1,0 +1,13 @@
+2025-02-27|1050|Food|Pizza
+2025-02-28|1900.0|Shopping|Shoes
+2025-02-01|1350|Food|Burger
+2025-03-02|1750|Food|Pasta
+2025-04-03|2900.0|Shopping|Clothes
+2025-04-05|6000.0|Rent|Office rent
+2025-04-19|500.0|Food|Breakfast
+2025-04-19|40000.0|Rent|House rent
+2025-04-23|300.0|Food|Dinner
+2025-04-15|1000.0|Travel|Travel on  bus
+2025-04-15|4000.0|Shopping|Shoes
+2025-04-15|3000.0|Travel|Visit to muree
+2025-04-15|40000.0|Food|Dinner
