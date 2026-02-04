@@ -1,0 +1,14 @@
+# Auto detect text files and perform LF normalization
+
+# Virtual environments (any depth)
+venv/
+.env/
+.venv/
+
+# Python cache (any depth)
+__pycache__/
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db

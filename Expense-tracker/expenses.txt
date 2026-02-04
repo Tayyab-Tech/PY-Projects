@@ -9,5 +9,5 @@
 2025-04-23|300.0|Food|Dinner
 2025-04-15|1000.0|Travel|Travel on  bus
 2025-04-15|4000.0|Shopping|Shoes
-2025-04-15|3000.0|Travel|Visit to muree
 2025-04-15|40000.0|Food|Dinner
+2017-12-23|2000.0|Food|Sale food
