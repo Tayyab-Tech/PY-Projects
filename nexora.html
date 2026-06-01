@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nexora Technologies — Intelligent Solutions for the Modern Enterprise</title>
+<meta name="description" content="Nexora Technologies delivers enterprise software development, hardware solutions, and IT consulting to accelerate your digital transformation." />
+<meta name="keywords" content="software development, IT consulting, hardware solutions, digital transformation, enterprise technology" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  /* ═══════════════════════════════════════
+     DESIGN TOKENS
+  ═══════════════════════════════════════ */
+  :root {
+    --navy:      #0A1628;
+    --navy-mid:  #0F2044;
+    --blue:      #1A3A6E;
+    --cyan:      #00C6FF;
+    --cyan-dim:  #00a8d9;
+    --orange:    #FF6B35;
+    --white:     #FFFFFF;
+    --off-white: #F4F7FB;
+    --text-dark: #0A1628;
+    --text-mid:  #3A4A60;
+    --text-grey: #6B7A95;
+    --border:    rgba(0,198,255,0.15);
+    --card-bg:   #FFFFFF;
+    --shadow-sm: 0 2px 16px rgba(10,22,40,0.07);
+    --shadow-md: 0 8px 40px rgba(10,22,40,0.12);
+    --shadow-lg: 0 24px 64px rgba(10,22,40,0.16);
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* ═══════════════════════════════════════
+     RESET & BASE
+  ═══════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: var(--font-body);
+    color: var(--text-dark);
+    background: var(--white);
+    overflow-x: hidden;
+    line-height: 1.65;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+
+  /* ═══════════════════════════════════════
+     UTILITY
+  ═══════════════════════════════════════ */
+  .container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 28px; height: 2px;
+    background: var(--cyan);
+    border-radius: 2px;
+  }
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .section-title span { color: var(--cyan); }
+  .section-sub {
+    font-size: 1.05rem;
+    color: var(--text-grey);
+    max-width: 540px;
+    margin-top: 14px;
+    line-height: 1.7;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    outline: none;
+  }
+  .btn-primary {
+    background: var(--cyan);
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .btn-primary:hover {
+    background: #22d4ff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,198,255,0.35);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.35);
+  }
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+  .btn-orange {
+    background: var(--orange);
+    color: var(--white);
+    font-weight: 700;
+  }
+  .btn-orange:hover {
+    background: #ff7d4d;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,107,53,0.35);
+  }
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  /* ═══════════════════════════════════════
+     NAVIGATION
+  ═══════════════════════════════════════ */
+  #navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+    padding: 0;
+  }
+  #navbar.scrolled {
+    background: rgba(10,22,40,0.97);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 2px 24px rgba(0,0,0,0.3);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--white);
+    letter-spacing: -0.03em;
+  }
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    background: var(--cyan);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo-icon svg { width: 20px; height: 20px; fill: var(--navy); }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.78);
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color var(--transition);
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: var(--cyan);
+    border-radius: 2px;
+    transition: width var(--transition);
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    padding: 10px 22px !important;
+    font-size: 0.88rem !important;
+  }
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: none; border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: var(--transition);
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 72px; left: 0; right: 0;
+    background: rgba(10,22,40,0.98);
+    backdrop-filter: blur(20px);
+    padding: 24px;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 999;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ═══════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════ */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--navy);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,198,255,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 10% 80%, rgba(26,58,110,0.6) 0%, transparent 60%),
+      linear-gradient(135deg, #0A1628 0%, #0F2044 60%, #0A1628 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,198,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,198,255,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 70% at 60% 30%, black 0%, transparent 75%);
+  }
+  .hero-orb {
+    position: absolute;
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,198,255,0.18) 0%, transparent 70%);
+    top: -80px; right: -80px;
+    animation: float 8s ease-in-out infinite;
+  }
+  .hero-orb-2 {
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 70%);
+    bottom: 80px; left: 5%;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-24px); }
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding-top: 100px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,198,255,0.1);
+    border: 1px solid rgba(0,198,255,0.25);
+    border-radius: 100px;
+    padding: 6px 16px 6px 8px;
+    font-size: 0.78rem;
+    color: var(--cyan);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px;
+    background: var(--cyan);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .hero-h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 22px;
+  }
+  .hero-h1 .highlight {
+    color: var(--cyan);
+    position: relative;
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 480px;
+    line-height: 1.75;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  .hero-btns {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .hero-stats {
+    display: flex; gap: 36px; margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .hero-stat-num {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+  .hero-stat-num span { color: var(--cyan); }
+  .hero-stat-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+  .hero-visual {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-card-stack {
+    position: relative;
+    width: 420px; height: 380px;
+  }
+  .hero-card {
+    position: absolute;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,198,255,0.15);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(12px);
+    padding: 24px;
+  }
+  .hero-card-main {
+    width: 320px; top: 40px; left: 50%;
+    transform: translateX(-50%);
+    animation: float 7s ease-in-out infinite;
+  }
+  .hero-card-sm1 {
+    width: 200px; bottom: 20px; left: 0;
+    animation: float 9s ease-in-out infinite 1s;
+  }
+  .hero-card-sm2 {
+    width: 160px; top: 10px; right: 0;
+    animation: float 8s ease-in-out infinite 2s;
+  }
+  .hc-icon {
+    width: 40px; height: 40px;
+    background: rgba(0,198,255,0.15);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+  }
+  .hc-icon svg { width: 20px; height: 20px; stroke: var(--cyan); }
+  .hc-title { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .hc-val {
+    font-family: var(--font-head);
+    font-size: 1.5rem; font-weight: 800;
+    color: var(--white);
+  }
+  .hc-sub { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 2px; }
+  .hc-bar-row {
+    display: flex; gap: 4px; margin-top: 14px;
+  }
+  .hc-bar {
+    height: 4px; border-radius: 4px;
+    background: rgba(0,198,255,0.4);
+    flex: 1;
+  }
+  .hc-bar.lit { background: var(--cyan); }
+  .hc-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(0,198,255,0.1);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 0.72rem;
+    color: var(--cyan);
+    margin-top: 8px;
+  }
+  .hc-tag-dot { width: 5px; height: 5px; background: var(--cyan); border-radius: 50%; }
+
+  /* ═══════════════════════════════════════
+     CLIENTS TICKER
+  ═══════════════════════════════════════ */
+  #clients {
+    background: var(--off-white);
+    padding: 48px 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(10,22,40,0.06);
+    border-bottom: 1px solid rgba(10,22,40,0.06);
+  }
+  .clients-label {
+    text-align: center;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-grey);
+    margin-bottom: 28px;
+  }
+  .ticker-wrap { overflow: hidden; position: relative; }
+  .ticker-wrap::before,
+  .ticker-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; width: 120px;
+    z-index: 2;
+  }
+  .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--off-white), transparent); }
+  .ticker-wrap::after  { right: 0; background: linear-gradient(to left,  var(--off-white), transparent); }
+  .ticker-track {
+    display: flex;
+    gap: 60px;
+    width: max-content;
+    animation: ticker 28s linear infinite;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  .client-logo {
+    display: flex; align-items: center; gap: 10px;
+    opacity: 0.45;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--navy-mid);
+    letter-spacing: -0.02em;
+    cursor: default;
+  }
+  .client-logo:hover { opacity: 0.85; }
+  .client-logo-icon {
+    width: 32px; height: 32px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+  }
+
+  /* ═══════════════════════════════════════
+     SERVICES
+  ═══════════════════════════════════════ */
+  #services { padding: 110px 0; background: var(--white); }
+  .services-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: end;
+    margin-bottom: 64px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(10,22,40,0.07);
+    border-radius: var(--radius-md);
+    padding: 36px 32px;
+    transition: var(--transition);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--blue));
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+  .service-card:hover {
+    border-color: rgba(0,198,255,0.2);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon {
+    width: 56px; height: 56px;
+    background: rgba(0,198,255,0.08);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+    transition: background var(--transition);
+  }
+  .service-card:hover .service-icon { background: rgba(0,198,255,0.15); }
+  .service-icon svg { width: 26px; height: 26px; stroke: var(--cyan); stroke-width: 1.5; fill: none; }
+  .service-name {
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+  }
+  .service-desc { font-size: 0.9rem; color: var(--text-grey); line-height: 1.7; }
+  .service-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--cyan);
+    margin-top: 18px;
+    transition: gap var(--transition);
+  }
+  .service-card:hover .service-link { gap: 10px; }
+
+  /* ═══════════════════════════════════════
+     ABOUT
+  ═══════════════════════════════════════ */
+  #about { padding: 110px 0; background: var(--off-white); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-visual { position: relative; }
+  .about-img-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #0F2044 0%, #1A3A6E 40%, #0A1628 100%);
+    position: relative;
+    box-shadow: var(--shadow-lg);
+  }
+  .about-img-inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 20px;
+  }
+  .about-circuit {
+    width: 100%; height: 100%;
+    position: absolute; inset: 0;
+    opacity: 0.3;
+  }
+  .about-badge-float {
+    position: absolute;
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    box-shadow: var(--shadow-md);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .about-badge-float.top-right {
+    top: -18px; right: -18px;
+  }
+  .about-badge-float.bottom-left {
+    bottom: -18px; left: -18px;
+  }
+  .abf-icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .abf-icon.blue { background: rgba(0,198,255,0.12); }
+  .abf-icon.orange { background: rgba(255,107,53,0.12); }
+  .abf-icon svg { width: 18px; height: 18px; }
+  .abf-text { font-size: 0.82rem; }
+  .abf-val { font-family: var(--font-head); font-weight: 700; font-size: 1rem; color: var(--text-dark); }
+  .abf-label { color: var(--text-grey); font-size: 0.72rem; }
+  .about-content .section-sub { max-width: 100%; }
+  .about-pillars {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 32px;
+  }
+  .about-pillar {
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    border: 1px solid rgba(10,22,40,0.06);
+  }
+  .ap-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ap-dot { width: 7px; height: 7px; background: var(--cyan); border-radius: 50%; }
+  .ap-body { font-size: 0.82rem; color: var(--text-grey); line-height: 1.6; }
+
+  /* ═══════════════════════════════════════
+     PORTFOLIO
+  ═══════════════════════════════════════ */
+  #portfolio { padding: 110px 0; background: var(--white); }
+  .portfolio-head {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .portfolio-head .section-label { justify-content: center; }
+  .portfolio-head .section-label::before { display: none; }
+  .portfolio-head .section-label::after {
+    content: ''; display: block; width: 28px; height: 2px;
+    background: var(--cyan); border-radius: 2px;
+  }
+  .filter-bar {
+    display: flex; align-items: center; gap: 8px;
+    justify-content: center; margin-bottom: 44px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1.5px solid rgba(10,22,40,0.12);
+    background: var(--white);
+    color: var(--text-mid);
+    transition: var(--transition);
+    font-family: var(--font-body);
+  }
+  .filter-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .filter-btn.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .portfolio-card {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid rgba(10,22,40,0.06);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    background: var(--white);
+  }
+  .portfolio-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+  .portfolio-thumb {
+    aspect-ratio: 16/9;
+    position: relative; overflow: hidden;
+  }
+  .portfolio-thumb-inner {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .portfolio-overlay {
+    position: absolute; inset: 0;
+    background: rgba(10,22,40,0.75);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+  .portfolio-card:hover .portfolio-overlay { opacity: 1; }
+  .portfolio-view-btn {
+    background: var(--cyan);
+    color: var(--navy);
+    font-weight: 700; font-size: 0.85rem;
+    padding: 10px 22px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; gap: 6px;
+    transform: translateY(10px);
+    transition: transform var(--transition);
+  }
+  .portfolio-card:hover .portfolio-view-btn { transform: translateY(0); }
+  .portfolio-body { padding: 22px 24px; }
+  .portfolio-tag {
+    font-size: 0.72rem; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--cyan); margin-bottom: 6px;
+  }
+  .portfolio-title {
+    font-family: var(--font-head);
+    font-weight: 700; font-size: 1rem;
+    color: var(--text-dark); margin-bottom: 6px;
+  }
+  .portfolio-desc { font-size: 0.84rem; color: var(--text-grey); line-height: 1.6; }
+
+  /* ═══════════════════════════════════════
+     WHY CHOOSE US
+  ═══════════════════════════════════════ */
+  #why {
+    padding: 110px 0;
+    background: var(--navy);
+    position: relative; overflow: hidden;
+  }
+  #why::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 100% 50%, rgba(0,198,255,0.07) 0%, transparent 60%);
+  }
+  #why .section-title { color: var(--white); }
+  #why .section-sub { color: rgba(255,255,255,0.5); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative; z-index: 1;
+  }
+  .why-features { display: flex; flex-direction: column; gap: 24px; margin-top: 36px; }
+  .why-feat {
+    display: flex; gap: 18px;
+    align-items: flex-start;
+  }
+  .why-feat-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: rgba(0,198,255,0.1);
+    border: 1px solid rgba(0,198,255,0.2);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .why-feat-icon svg { width: 22px; height: 22px; stroke: var(--cyan); fill: none; stroke-width: 1.5; }
+  .why-feat-title { font-family: var(--font-head); font-weight: 700; color: var(--white); font-size: 0.95rem; margin-bottom: 4px; }
+  .why-feat-desc { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+  .why-metrics {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .metric-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,198,255,0.12);
+    border-radius: var(--radius-md);
+    padding: 28px 24px;
+    transition: var(--transition);
+  }
+  .metric-card:hover {
+    background: rgba(0,198,255,0.06);
+    border-color: rgba(0,198,255,0.25);
+  }
+  .metric-val {
+    font-family: var(--font-head);
+    font-size: 2.4rem; font-weight: 800;
+    color: var(--white); line-height: 1;
+    margin-bottom: 6px;
+  }
+  .metric-val span { color: var(--cyan); }
+  .metric-label { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.5; }
+
+  /* ═══════════════════════════════════════
+     CONTACT
+  ═══════════════════════════════════════ */
+  #contact { padding: 110px 0; background: var(--off-white); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .contact-info .section-sub { margin-bottom: 36px; }
+  .contact-detail {
+    display: flex; align-items: flex-start;
+    gap: 16px; margin-bottom: 24px;
+  }
+  .cd-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: rgba(0,198,255,0.08);
+    border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(0,198,255,0.15);
+  }
+  .cd-icon svg { width: 20px; height: 20px; stroke: var(--cyan); fill: none; stroke-width: 1.5; }
+  .cd-label { font-size: 0.76rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-grey); margin-bottom: 4px; }
+  .cd-val { font-weight: 500; color: var(--text-dark); font-size: 0.95rem; }
+  .map-wrap {
+    margin-top: 32px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid rgba(10,22,40,0.08);
+    box-shadow: var(--shadow-sm);
+    height: 200px;
+  }
+  .map-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #dce8f5 0%, #c8daf0 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 10px;
+    color: var(--blue);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .map-placeholder svg { width: 36px; height: 36px; stroke: var(--blue); fill: none; }
+  .contact-form {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 44px 40px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(10,22,40,0.06);
+  }
+  .form-title {
+    font-family: var(--font-head);
+    font-size: 1.4rem; font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 28px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block;
+    font-size: 0.82rem; font-weight: 500;
+    color: var(--text-mid);
+    margin-bottom: 7px;
+    letter-spacing: 0.01em;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid rgba(10,22,40,0.1);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    background: var(--white);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0,198,255,0.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-submit { width: 100%; justify-content: center; font-size: 1rem; padding: 15px; }
+
+  /* ═══════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════ */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.55);
+    padding-top: 80px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 48px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-brand .nav-logo { margin-bottom: 16px; }
+  .footer-brand p { font-size: 0.87rem; line-height: 1.7; max-width: 280px; }
+  .footer-social {
+    display: flex; gap: 10px; margin-top: 24px;
+  }
+  .social-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    transition: var(--transition);
+    cursor: pointer;
+  }
+  .social-icon:hover { background: var(--cyan); }
+  .social-icon svg { width: 16px; height: 16px; fill: rgba(255,255,255,0.6); }
+  .social-icon:hover svg { fill: var(--navy); }
+  .footer-col-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--white);
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+  }
+  .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a {
+    font-size: 0.85rem;
+    transition: color var(--transition);
+  }
+  .footer-col ul li a:hover { color: var(--cyan); }
+  .newsletter-form {
+    display: flex; gap: 0;
+    margin-top: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .newsletter-form input {
+    flex: 1;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.05);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--white);
+    outline: none;
+  }
+  .newsletter-form input::placeholder { color: rgba(255,255,255,0.3); }
+  .newsletter-form button {
+    padding: 12px 18px;
+    background: var(--cyan);
+    border: none;
+    cursor: pointer;
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.82rem;
+    transition: background var(--transition);
+    white-space: nowrap;
+  }
+  .newsletter-form button:hover { background: #22d4ff; }
+  .footer-bottom {
+    padding: 24px 0;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom-links { display: flex; gap: 24px; }
+  .footer-bottom-links a:hover { color: var(--cyan); }
+
+  /* ═══════════════════════════════════════
+     TOAST / SUCCESS
+  ═══════════════════════════════════════ */
+  .toast {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    background: var(--navy);
+    color: var(--white);
+    padding: 16px 24px;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--cyan);
+    box-shadow: var(--shadow-lg);
+    z-index: 9999;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .hero-card-stack { width: 340px; height: 320px; }
+    .hero-card-main { width: 270px; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-content { grid-template-columns: 1fr; text-align: center; padding-top: 80px; }
+    .hero-btns { justify-content: center; }
+    .hero-stats { justify-content: center; gap: 24px; }
+    .hero-visual { display: none; }
+    .services-head { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-visual { order: -1; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-form { padding: 28px 22px; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .about-badge-float.top-right { top: 10px; right: 10px; }
+    .about-badge-float.bottom-left { bottom: 10px; left: 10px; }
+    .hero-h1 { font-size: 2.4rem; }
+  }
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .why-metrics { grid-template-columns: 1fr; }
+    .about-pillars { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVBAR ═══════ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 20 20"><path d="M3 10L10 3l7 7-7 7-7-7z"/><path d="M10 3v14M3 10h14" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        Nexora
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#contact"><button class="btn btn-primary nav-cta">Get in Touch</button></a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services">Services</a>
+  <a href="#about">About</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#why">Why Us</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb-2"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-left fade-up">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Now Accepting Enterprise Projects for Q3 2025
+        </div>
+        <h1 class="hero-h1">
+          Intelligent Tech<br/>Solutions for a<br/><span class="highlight">Digital-First</span> Era
+        </h1>
+        <p class="hero-sub">We architect, build, and scale transformative software, hardware, and IT infrastructure so your business operates faster, smarter, and more securely.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-primary">
+            Get Started
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#portfolio" class="btn btn-outline">View Our Work</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">12<span>+</span></div>
+            <div class="hero-stat-label">Years Active</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">340<span>+</span></div>
+            <div class="hero-stat-label">Projects Delivered</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">98<span>%</span></div>
+            <div class="hero-stat-label">Client Satisfaction</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual fade-up" style="transition-delay:0.2s">
+        <div class="hero-card-stack">
+          <div class="hero-card hero-card-main">
+            <div class="hc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>
+            </div>
+            <div class="hc-title">System Performance</div>
+            <div class="hc-val">99.98%</div>
+            <div class="hc-sub">Uptime — Last 365 days</div>
+            <div class="hc-bar-row">
+              <div class="hc-bar lit"></div><div class="hc-bar lit"></div><div class="hc-bar lit"></div>
+              <div class="hc-bar lit"></div><div class="hc-bar lit"></div><div class="hc-bar lit"></div>
+              <div class="hc-bar lit"></div><div class="hc-bar"></div>
+            </div>
+            <span class="hc-tag"><span class="hc-tag-dot"></span> All Systems Operational</span>
+          </div>
+          <div class="hero-card hero-card-sm1">
+            <div class="hc-title">Active Clients</div>
+            <div class="hc-val" style="font-size:1.3rem">48</div>
+            <div class="hc-sub">Across 12 countries</div>
+          </div>
+          <div class="hero-card hero-card-sm2">
+            <div class="hc-title">Security Score</div>
+            <div class="hc-val" style="font-size:1.3rem;color:var(--cyan)">A+</div>
+            <div class="hc-sub">ISO 27001 Certified</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CLIENTS TICKER ═══════ -->
+<section id="clients">
+  <div class="clients-label">Trusted by Industry Leaders</div>
+  <div class="ticker-wrap">
+    <div class="ticker-track" id="tickerTrack">
+      <!-- Set 1 -->
+      <div class="client-logo"><div class="client-logo-icon" style="background:#dbeafe">🔷</div>AlphaCorp</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#fce7d6">🟠</div>Orion Systems</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#d1fae5">🟢</div>VenturePath</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#ede9fe">🟣</div>PulseTech</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#fef3c7">🟡</div>Meridian Group</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#fce7f3">🔵</div>Apex Digital</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#e0f2fe">🌐</div>CloudNova</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#f0fdf4">🛡</div>SecureLink</div>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="client-logo"><div class="client-logo-icon" style="background:#dbeafe">🔷</div>AlphaCorp</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#fce7d6">🟠</div>Orion Systems</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#d1fae5">🟢</div>VenturePath</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#ede9fe">🟣</div>PulseTech</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#fef3c7">🟡</div>Meridian Group</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#fce7f3">🔵</div>Apex Digital</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#e0f2fe">🌐</div>CloudNova</div>
+      <div class="client-logo"><div class="client-logo-icon" style="background:#f0fdf4">🛡</div>SecureLink</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SERVICES ═══════ -->
+<section id="services">
+  <div class="container">
+    <div class="services-head fade-up">
+      <div>
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">Comprehensive Tech<br/><span>Solutions</span></h2>
+      </div>
+      <p class="section-sub" style="margin-top:0; align-self:flex-end">From custom software to enterprise infrastructure — we deliver end-to-end technology that powers modern businesses.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card fade-up">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="service-name">Software Development</div>
+        <p class="service-desc">Custom web and mobile applications engineered for performance, scalability, and long-term maintainability across any tech stack.</p>
+        <a href="#contact" class="service-link">Learn More →</a>
+      </div>
+
+      <div class="service-card fade-up" style="transition-delay:0.08s">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="service-name">Hardware Solutions</div>
+        <p class="service-desc">Enterprise-grade server deployment, network architecture, edge computing, and IoT integration tailored to your operational demands.</p>
+        <a href="#contact" class="service-link">Learn More →</a>
+      </div>
+
+      <div class="service-card fade-up" style="transition-delay:0.16s">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="service-name">IT Consulting</div>
+        <p class="service-desc">Strategic advisory services to align your technology roadmap with business goals, optimise costs, and mitigate digital risk.</p>
+        <a href="#contact" class="service-link">Learn More →</a>
+      </div>
+
+      <div class="service-card fade-up" style="transition-delay:0.24s">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="service-name">Cybersecurity</div>
+        <p class="service-desc">Penetration testing, threat monitoring, compliance audits, and zero-trust architecture to keep your systems and data protected.</p>
+        <a href="#contact" class="service-link">Learn More →</a>
+      </div>
+
+      <div class="service-card fade-up" style="transition-delay:0.32s">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="service-name">Cloud Infrastructure</div>
+        <p class="service-desc">Multi-cloud migration, Kubernetes orchestration, CI/CD pipelines, and 24/7 managed operations for maximum uptime and agility.</p>
+        <a href="#contact" class="service-link">Learn More →</a>
+      </div>
+
+      <div class="service-card fade-up" style="transition-delay:0.4s">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <div class="service-name">AI & Data Analytics</div>
+        <p class="service-desc">Machine learning pipelines, predictive dashboards, and natural language interfaces that transform raw data into actionable intelligence.</p>
+        <a href="#contact" class="service-link">Learn More →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual fade-up">
+        <div class="about-img-wrap">
+          <svg class="about-circuit" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#00C6FF" stroke-width="1" fill="none" opacity="0.4">
+              <path d="M50 200 H150 V100 H250 V200 H400"/>
+              <path d="M150 200 V300 H300 V200"/>
+              <path d="M250 100 V50 H350 V150 H400"/>
+              <path d="M100 200 V350 H400 V280"/>
+              <path d="M200 300 V380 H450"/>
+              <circle cx="150" cy="200" r="4" fill="#00C6FF"/>
+              <circle cx="250" cy="100" r="4" fill="#00C6FF"/>
+              <circle cx="300" cy="200" r="4" fill="#00C6FF"/>
+              <circle cx="350" cy="150" r="4" fill="#00C6FF"/>
+              <circle cx="400" cy="200" r="5" stroke="#00C6FF" fill="none" stroke-width="2"/>
+              <rect x="220" y="80" width="20" height="20" rx="3"/>
+              <rect x="170" y="180" width="16" height="16" rx="2"/>
+              <rect x="270" y="280" width="20" height="20" rx="3"/>
+            </g>
+          </svg>
+          <div style="position:relative;z-index:2;text-align:center;color:white;">
+            <div style="font-family:var(--font-head);font-size:3rem;font-weight:800;color:var(--cyan);line-height:1">2012</div>
+            <div style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-top:4px">Founded</div>
+            <div style="margin-top:24px;font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:white;letter-spacing:-0.01em">Building Tomorrow's<br/>Infrastructure, Today.</div>
+          </div>
+        </div>
+        <div class="about-badge-float top-right">
+          <div class="abf-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="abf-text">
+            <div class="abf-val">ISO Certified</div>
+            <div class="abf-label">27001 & 9001</div>
+          </div>
+        </div>
+        <div class="about-badge-float bottom-left">
+          <div class="abf-icon orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="abf-text">
+            <div class="abf-val">4.9 / 5.0</div>
+            <div class="abf-label">Client Rating</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-content fade-up" style="transition-delay:0.15s">
+        <div class="section-label">Who We Are</div>
+        <h2 class="section-title">Driven by Innovation,<br/>Grounded in <span>Excellence</span></h2>
+        <p class="section-sub">Nexora Technologies was founded with one conviction: technology should create measurable advantage, not complexity. For over a decade, we've partnered with startups and Fortune 500 enterprises to design and deliver technology that lasts.</p>
+        <div class="about-pillars">
+          <div class="about-pillar">
+            <div class="ap-title"><span class="ap-dot"></span>Our Mission</div>
+            <p class="ap-body">To democratise enterprise-grade technology by making it accessible, adaptable, and aligned with real business outcomes.</p>
+          </div>
+          <div class="about-pillar">
+            <div class="ap-title"><span class="ap-dot"></span>Our Vision</div>
+            <p class="ap-body">A world where every organisation — regardless of size — can leverage world-class technology to compete and grow.</p>
+          </div>
+          <div class="about-pillar">
+            <div class="ap-title"><span class="ap-dot"></span>Our Values</div>
+            <p class="ap-body">Transparency, craftsmanship, client-centricity, and a relentless bias toward elegant, simple solutions.</p>
+          </div>
+          <div class="about-pillar">
+            <div class="ap-title"><span class="ap-dot"></span>Our Team</div>
+            <p class="ap-body">80+ engineers, designers, and strategists across 6 countries — all passionate about building things that matter.</p>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-orange" style="margin-top:32px">
+          Let's Work Together
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PORTFOLIO ═══════ -->
+<section id="portfolio">
+  <div class="container">
+    <div class="portfolio-head fade-up">
+      <div class="section-label">Our Work</div>
+      <h2 class="section-title">Featured <span>Projects</span></h2>
+      <p class="section-sub" style="margin: 14px auto 0; text-align:center">A curated selection of transformative solutions we've delivered across industries.</p>
+    </div>
+    <div class="filter-bar fade-up">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="software">Software</button>
+      <button class="filter-btn" data-filter="hardware">Hardware</button>
+      <button class="filter-btn" data-filter="cloud">Cloud</button>
+      <button class="filter-btn" data-filter="security">Security</button>
+    </div>
+    <div class="portfolio-grid" id="portfolioGrid">
+
+      <div class="portfolio-card fade-up" data-category="software">
+        <div class="portfolio-thumb">
+          <div class="portfolio-thumb-inner" style="background:linear-gradient(135deg,#0F2044,#1A3A6E)">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:0.4">
+              <rect x="8" y="8" width="48" height="48" rx="8" stroke="#00C6FF" stroke-width="2"/>
+              <path d="M20 32h24M20 24h16M20 40h20" stroke="#00C6FF" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-view-btn">View Case Study ↗</div>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Software · FinTech</div>
+          <div class="portfolio-title">Meridian Banking Platform</div>
+          <p class="portfolio-desc">Full-stack digital banking solution serving 2M+ users with real-time fraud detection and open banking APIs.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up" data-category="cloud" style="transition-delay:0.08s">
+        <div class="portfolio-thumb">
+          <div class="portfolio-thumb-inner" style="background:linear-gradient(135deg,#0a2615,#0d4a1f)">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:0.4">
+              <path d="M48 40H20a12 12 0 010-24h2a16 16 0 0130 4 10 10 0 01-4 20z" stroke="#34d399" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-view-btn">View Case Study ↗</div>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Cloud · Infrastructure</div>
+          <div class="portfolio-title">Orion Multi-Cloud Migration</div>
+          <p class="portfolio-desc">Migrated 300+ services to AWS/GCP hybrid architecture, reducing infrastructure costs by 42%.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up" data-category="hardware" style="transition-delay:0.16s">
+        <div class="portfolio-thumb">
+          <div class="portfolio-thumb-inner" style="background:linear-gradient(135deg,#1a0a00,#3d1800)">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:0.4">
+              <rect x="12" y="18" width="40" height="28" rx="4" stroke="#FF6B35" stroke-width="2"/>
+              <path d="M24 46v8M40 46v8M18 54h28" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-view-btn">View Case Study ↗</div>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Hardware · Manufacturing</div>
+          <div class="portfolio-title">VentureMfg Edge Network</div>
+          <p class="portfolio-desc">Deployed 1,200-node edge computing network across 18 factories for real-time production intelligence.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up" data-category="security" style="transition-delay:0.24s">
+        <div class="portfolio-thumb">
+          <div class="portfolio-thumb-inner" style="background:linear-gradient(135deg,#0a0a1a,#1a1a3d)">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:0.4">
+              <path d="M32 8L12 18v14c0 12.4 8.53 24 20 27.2C43.47 56 52 44.4 52 32V18L32 8z" stroke="#a78bfa" stroke-width="2"/>
+              <path d="M24 32l5 5 10-10" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-view-btn">View Case Study ↗</div>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Security · Healthcare</div>
+          <div class="portfolio-title">MediShield Zero-Trust SOC</div>
+          <p class="portfolio-desc">Built a 24/7 security operations center for a 12-hospital network achieving HIPAA and SOC 2 Type II compliance.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up" data-category="software" style="transition-delay:0.32s">
+        <div class="portfolio-thumb">
+          <div class="portfolio-thumb-inner" style="background:linear-gradient(135deg,#0a1a1a,#003d3d)">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:0.4">
+              <circle cx="32" cy="32" r="20" stroke="#22d3ee" stroke-width="2"/>
+              <path d="M32 20v12l8 4" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-view-btn">View Case Study ↗</div>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Software · Logistics</div>
+          <div class="portfolio-title">PulseTrack Fleet Intelligence</div>
+          <p class="portfolio-desc">AI-powered real-time fleet management platform tracking 15,000 vehicles and reducing delivery delays by 31%.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up" data-category="cloud" style="transition-delay:0.4s">
+        <div class="portfolio-thumb">
+          <div class="portfolio-thumb-inner" style="background:linear-gradient(135deg,#140a1a,#2d1a4d)">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:0.4">
+              <rect x="8" y="24" width="48" height="32" rx="4" stroke="#c084fc" stroke-width="2"/>
+              <path d="M16 24V16a16 16 0 0132 0v8" stroke="#c084fc" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <div class="portfolio-view-btn">View Case Study ↗</div>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Cloud · EdTech</div>
+          <div class="portfolio-title">EduCloud Learning Infrastructure</div>
+          <p class="portfolio-desc">Scalable Kubernetes-based LMS platform supporting 500k concurrent learners across Southeast Asia.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHY CHOOSE US ═══════ -->
+<section id="why">
+  <div class="container">
+    <div class="why-grid">
+      <div class="fade-up">
+        <div class="section-label" style="color:var(--cyan)">Why Nexora</div>
+        <h2 class="section-title">The Difference Is in the <span>Details</span></h2>
+        <p class="section-sub">We don't just deliver code — we deliver confidence. Our methodology is built around measurable outcomes, transparent communication, and engineering excellence.</p>
+        <div class="why-features">
+          <div class="why-feat">
+            <div class="why-feat-icon">
+              <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <div>
+              <div class="why-feat-title">Agile, Not Chaotic</div>
+              <p class="why-feat-desc">Two-week sprints, daily standups, and weekly client demos — you always know exactly where your project stands.</p>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-feat-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <div class="why-feat-title">On-Time, Every Time</div>
+              <p class="why-feat-desc">94% of our projects are delivered on schedule. Rigorous planning and risk management keep timelines intact.</p>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-feat-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <div class="why-feat-title">Security by Design</div>
+              <p class="why-feat-desc">Security isn't bolted on afterwards — it's baked into every architecture decision, code review, and deployment pipeline.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-metrics fade-up" style="transition-delay:0.15s">
+        <div class="metric-card">
+          <div class="metric-val">340<span>+</span></div>
+          <div class="metric-label">Projects Successfully Delivered</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">98<span>%</span></div>
+          <div class="metric-label">Client Retention Rate</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">80<span>+</span></div>
+          <div class="metric-label">Engineers & Specialists</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">12<span>yrs</span></div>
+          <div class="metric-label">Industry Experience</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section id="contact">
+  <div class="container">
+    <div class="portfolio-head fade-up" style="text-align:left; margin-bottom:56px;">
+      <div class="section-label">Contact Us</div>
+      <h2 class="section-title">Let's Build Something <span>Great</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info fade-up">
+        <p class="section-sub">Ready to take your technology to the next level? Drop us a message and our team will get back to you within one business day.</p>
+        <div class="contact-detail">
+          <div class="cd-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.68 11.1 19.79 19.79 0 011.61 2.53 2 2 0 013.6.35h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 7.91a16 16 0 006.29 6.29l.96-.96a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2z"/></svg>
+          </div>
+          <div>
+            <div class="cd-label">Phone</div>
+            <div class="cd-val">+1 (800) 639-2672</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="cd-label">Email</div>
+            <div class="cd-val">hello@nexoratech.io</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="cd-label">Address</div>
+            <div class="cd-val">800 Technology Drive, Suite 400<br/>San Francisco, CA 94105</div>
+          </div>
+        </div>
+        <div class="map-wrap">
+          <div class="map-placeholder">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>800 Technology Drive, San Francisco</span>
+            <span style="font-size:0.75rem;color:#6B7A95">Click to open in Google Maps</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form fade-up" style="transition-delay:0.15s">
+        <div class="form-title">Send Us a Message</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" placeholder="John" />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="john@company.com" />
+        </div>
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="text" id="company" placeholder="Your Company Name" />
+        </div>
+        <div class="form-group">
+          <label for="service">Service of Interest</label>
+          <select id="service">
+            <option value="">— Select a Service —</option>
+            <option>Software Development</option>
+            <option>Hardware Solutions</option>
+            <option>IT Consulting</option>
+            <option>Cybersecurity</option>
+            <option>Cloud Infrastructure</option>
+            <option>AI & Data Analytics</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell us about your project, goals, and timeline…"></textarea>
+        </div>
+        <button class="btn btn-primary form-submit" id="submitBtn" onclick="handleSubmit()">
+          Send Message
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-icon">
+            <svg viewBox="0 0 20 20"><path d="M3 10L10 3l7 7-7 7-7-7z"/><path d="M10 3v14M3 10h14" stroke="#0A1628" stroke-width="1.5" fill="none"/></svg>
+          </div>
+          Nexora
+        </a>
+        <p>Delivering intelligent technology solutions that empower enterprises to innovate, scale, and lead in a digital-first world.</p>
+        <div class="footer-social">
+          <div class="social-icon" title="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <div class="social-icon" title="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </div>
+          <div class="social-icon" title="GitHub">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          </div>
+          <div class="social-icon" title="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0A1628"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Services</div>
+        <ul>
+          <li><a href="#services">Software Development</a></li>
+          <li><a href="#services">Hardware Solutions</a></li>
+          <li><a href="#services">IT Consulting</a></li>
+          <li><a href="#services">Cybersecurity</a></li>
+          <li><a href="#services">Cloud Infrastructure</a></li>
+          <li><a href="#services">AI & Analytics</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#why">Why Nexora</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Newsletter</div>
+        <p style="font-size:0.85rem;margin-bottom:16px;line-height:1.6">Monthly insights on enterprise tech, cloud architecture, and digital strategy.</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Your email address" id="newsletterEmail" />
+          <button onclick="handleNewsletter()">Subscribe</button>
+        </div>
+        <p style="font-size:0.75rem;margin-top:10px;opacity:0.5">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Nexora Technologies, Inc. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Settings</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ── Navbar scroll ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ── Hamburger ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  /* ── Portfolio filter ── */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const portfolioCards = document.querySelectorAll('.portfolio-card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      portfolioCards.forEach(card => {
+        const show = filter === 'all' || card.dataset.category === filter;
+        card.style.transition = 'opacity 0.3s, transform 0.3s';
+        card.style.opacity = show ? '1' : '0.2';
+        card.style.transform = show ? '' : 'scale(0.97)';
+        card.style.pointerEvents = show ? '' : 'none';
+      });
+    });
+  });
+
+  /* ── Scroll fade-up ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ── Toast helper ── */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 4000);
+  }
+
+  /* ── Form submit ── */
+  function handleSubmit() {
+    const email = document.getElementById('email').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
+    if (!firstName || !email) {
+      showToast('⚠️ Please fill in your name and email.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showToast('⚠️ Please enter a valid email address.');
+      return;
+    }
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = 'Message Sent ✓';
+      btn.style.background = '#22c55e';
+      showToast('✅ Message received! We\'ll be in touch within 24 hours.');
+      setTimeout(() => {
+        btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 4000);
+    }, 1600);
+  }
+
+  /* ── Newsletter ── */
+  function handleNewsletter() {
+    const email = document.getElementById('newsletterEmail').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showToast('⚠️ Please enter a valid email to subscribe.');
+      return;
+    }
+    showToast('✅ You\'re subscribed! Welcome to the Nexora newsletter.');
+    document.getElementById('newsletterEmail').value = '';
+  }
+
+  /* ── Map click ── */
+  document.querySelector('.map-placeholder').addEventListener('click', () => {
+    window.open('https://maps.google.com/?q=800+Technology+Drive+San+Francisco+CA', '_blank');
+  });
+  document.querySelector('.map-placeholder').style.cursor = 'pointer';
+
+  /* ── Smooth scroll for nav links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ── Counter animation ── */
+  function animateCounters() {
+    document.querySelectorAll('.hero-stat-num').forEach(el => {
+      const text = el.textContent;
+      const num = parseInt(text.replace(/\D/g, ''));
+      const suffix = text.replace(/[\d]/g, '');
+      let count = 0;
+      const step = num / 60;
+      const interval = setInterval(() => {
+        count = Math.min(count + step, num);
+        el.innerHTML = Math.round(count) + '<span>' + suffix + '</span>';
+        if (count >= num) clearInterval(interval);
+      }, 20);
+    });
+  }
+  setTimeout(animateCounters, 600);
+</script>
+</body>
+</html>

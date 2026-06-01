@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Water Drop Animation With Hero</title>
+<style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+        background:black;
+        overflow:hidden;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Canvas should stay behind */
+    canvas{
+        position: fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        z-index:-1;
+    }
+
+    /* Hero Section */
+    .hero{
+        height:100vh;
+        width:100%;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        color:#00eaff;
+        padding:20px;
+        z-index:10;
+        position:relative;
+    }
+
+    .hero-box{
+        backdrop-filter: blur(10px);
+        background: rgba(0,255,255,0.07);
+        padding:35px 60px;
+        border:1px solid rgba(0,255,255,0.4);
+        border-radius:12px;
+        box-shadow:0 0 20px rgba(0,255,255,0.4);
+    }
+
+    .hero h1{
+        font-size:3rem;
+        margin-bottom:15px;
+        text-shadow:0 0 10px #00eaff;
+    }
+
+    .hero p{
+        font-size:1.2rem;
+        max-width:600px;
+    }
+</style>
+</head>
+<body>
+
+<!-- Hero Content -->
+<section class="hero">
+    <div class="hero-box">
+        <h1>Welcome to Neon Universe</h1>
+        <p>Futuristic glowing raindrop animation made with HTML canvas. Enjoy the cyber-vibes 🔥</p>
+    </div>
+</section>
+
+<!-- Canvas Animation -->
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let drops = [];
+let rings = [];
+
+function random(a, b) {
+    return Math.random() * (b - a) + a;
+}
+
+class Drop {
+    constructor() {
+        this.x = random(0, canvas.width);
+        this.y = random(-200, -50);
+        this.speed = random(3, 7);
+        this.length = random(25, 50);
+    }
+    update() {
+        this.y += this.speed;
+        if (this.y > canvas.height - 20) {
+            rings.push(new Ring(this.x, this.y));
+            this.y = random(-200, -50);
+            this.x = random(0, canvas.width);
+            this.speed = random(2, 5);
+        }
+    }
+    draw() {
+        ctx.strokeStyle = "rgba(0,255,255,0.9)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x, this.y + this.length);
+        ctx.stroke();
+    }
+}
+
+class Ring {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = 2;
+        this.alpha = 1;
+    }
+    update() {
+        this.radius += 1.5;
+        this.alpha -= 0.02;
+    }
+    draw() {
+        ctx.strokeStyle = `rgba(0,255,255,${this.alpha})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+}
+
+for (let i = 0; i < 25; i++) drops.push(new Drop());
+
+function animate() {
+    ctx.fillStyle = "rgba(0,0,0,0.1)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    drops.forEach(d => { d.update(); d.draw(); });
+    rings.forEach((r, i) => {
+        r.update(); r.draw();
+        if (r.alpha <= 0) rings.splice(i, 1);
+    });
+
+    requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>

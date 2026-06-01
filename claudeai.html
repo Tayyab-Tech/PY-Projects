@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stratum — Deep Work, Simplified</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0e0d0b;
+    --paper: #f5f2ec;
+    --paper2: #ede9e0;
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --rust: #c45c2e;
+    --sage: #5a7a5e;
+    --muted: #8a8679;
+    --border: rgba(14,13,11,0.12);
+    --serif: 'DM Serif Display', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Instrument Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(245,242,236,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 10px 22px; border: 1.5px solid var(--ink);
+    background: transparent; color: var(--ink);
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--paper); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* grid texture */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  .hero-left {
+    padding: 80px 56px 80px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; z-index: 1;
+  }
+
+  .hero-label {
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-label::before {
+    content: ''; display: inline-block;
+    width: 28px; height: 1.5px; background: var(--gold);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(52px, 5.5vw, 78px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-sub {
+    font-size: 17px; line-height: 1.65;
+    color: var(--muted); max-width: 400px;
+    margin-bottom: 44px;
+  }
+
+  .hero-actions {
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  }
+  .btn-primary {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 16px 36px; background: var(--ink); color: var(--paper);
+    border: none; cursor: pointer; text-decoration: none;
+    transition: transform 0.15s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #2a2820; transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); }
+  .btn-ghost .arrow { transition: transform 0.2s; }
+  .btn-ghost:hover .arrow { transform: translateX(4px); }
+
+  .hero-stat-row {
+    display: flex; gap: 36px; margin-top: 56px;
+    padding-top: 36px; border-top: 1px solid var(--border);
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: var(--serif); font-size: 32px; color: var(--ink);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px; color: var(--muted); margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── HERO RIGHT: app mockup ── */
+  .hero-right {
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    padding: 60px 48px;
+    position: relative; overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+  }
+
+  .app-mockup {
+    width: 100%; max-width: 380px;
+    background: #1a1916;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    position: relative; z-index: 1;
+    animation: floatUp 0.8s cubic-bezier(0.22,1,0.36,1) both;
+    animation-delay: 0.3s;
+  }
+  @keyframes floatUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .mockup-titlebar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+  .mockup-title {
+    font-family: var(--mono); font-size: 11px;
+    color: rgba(255,255,255,0.25); margin-left: 8px;
+  }
+
+  .mockup-body { padding: 20px 16px; }
+  .mockup-date {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .task-block { margin-bottom: 6px; }
+  .task-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.04);
+    margin-bottom: 4px;
+    animation: slideIn 0.5s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .task-item:nth-child(1) { animation-delay: 0.5s; }
+  .task-item:nth-child(2) { animation-delay: 0.65s; }
+  .task-item:nth-child(3) { animation-delay: 0.8s; }
+  .task-item:nth-child(4) { animation-delay: 0.95s; }
+  .task-item:nth-child(5) { animation-delay: 1.1s; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .task-item.done { opacity: 0.45; }
+  .task-check {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  }
+  .task-check.checked { background: var(--gold); border-color: var(--gold); }
+  .task-check.checked::after {
+    content: ''; display: block; width: 5px; height: 3px;
+    border-left: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink);
+    transform: rotate(-45deg) translateY(-1px);
+  }
+  .task-text {
+    font-size: 12px; color: rgba(255,255,255,0.75); flex: 1;
+    font-family: var(--sans);
+  }
+  .task-item.done .task-text { text-decoration: line-through; color: rgba(255,255,255,0.3); }
+  .task-tag {
+    font-family: var(--mono); font-size: 9px; padding: 2px 7px;
+    border-radius: 2px; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .tag-gold { background: rgba(201,168,76,0.15); color: var(--gold-light); }
+  .tag-rust { background: rgba(196,92,46,0.15); color: #e07b52; }
+  .tag-sage { background: rgba(90,122,94,0.15); color: #7aab7e; }
+
+  .mockup-divider {
+    height: 1px; background: rgba(255,255,255,0.05);
+    margin: 16px 0;
+  }
+
+  .focus-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 12px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 2px;
+    animation: slideIn 0.5s cubic-bezier(0.22,1,0.36,1) both;
+    animation-delay: 1.2s;
+  }
+  .focus-label {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--gold); letter-spacing: 0.1em;
+  }
+  .focus-timer {
+    font-family: var(--mono); font-size: 18px;
+    color: var(--gold-light); font-weight: 500;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 100px 48px; }
+
+  .section-label {
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: ''; width: 20px; height: 1.5px;
+    background: var(--muted); display: inline-block;
+  }
+
+  /* ── FEATURES ── */
+  .features { background: var(--paper2); }
+
+  .features-header {
+    max-width: 560px; margin-bottom: 72px;
+  }
+  .features-header h2 {
+    font-family: var(--serif);
+    font-size: clamp(38px, 4vw, 56px);
+    line-height: 1.08; letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .features-header h2 em { font-style: italic; color: var(--rust); }
+  .features-header p {
+    font-size: 16px; color: var(--muted); line-height: 1.65;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .feature-card {
+    background: var(--paper);
+    padding: 40px 36px;
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: transform 0.2s;
+    cursor: default;
+  }
+  .feature-card:hover { transform: translateY(-3px); }
+  .feature-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .feature-card:hover::after { width: 100%; }
+
+  .feature-icon {
+    width: 36px; height: 36px; margin-bottom: 24px;
+    color: var(--gold);
+  }
+
+  .feature-num {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); letter-spacing: 0.1em;
+    margin-bottom: 16px; display: block;
+  }
+
+  .feature-title {
+    font-family: var(--serif); font-size: 22px;
+    line-height: 1.2; margin-bottom: 12px; color: var(--ink);
+  }
+
+  .feature-desc {
+    font-size: 14px; color: var(--muted); line-height: 1.7;
+  }
+
+  /* ── TESTIMONIAL STRIP ── */
+  .testimonials {
+    background: var(--ink); color: var(--paper);
+    padding: 80px 48px;
+    display: grid; grid-template-columns: 1fr 2fr;
+    gap: 80px; align-items: center;
+  }
+  .test-left h2 {
+    font-family: var(--serif); font-size: 40px;
+    line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .test-left h2 em { color: var(--gold); font-style: italic; }
+  .test-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  .test-card {
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 28px 24px;
+  }
+  .test-quote {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,0.65); margin-bottom: 20px;
+    font-style: italic;
+    font-family: var(--serif);
+  }
+  .test-author {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .test-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .test-name { font-size: 12px; font-weight: 600; color: var(--paper); }
+  .test-role { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 1px; }
+
+  /* ── HOW IT WORKS ── */
+  .how-it-works { padding: 100px 48px; }
+  .how-header { max-width: 480px; margin-bottom: 64px; }
+  .how-header h2 {
+    font-family: var(--serif); font-size: clamp(36px,4vw,52px);
+    line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 12px;
+  }
+  .steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute; top: 24px; left: 40px; right: 40px;
+    height: 1px; background: var(--border);
+  }
+  .step { padding: 0 24px 0 0; }
+  .step-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--ink); color: var(--paper);
+    font-family: var(--mono); font-size: 14px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px; position: relative; z-index: 1;
+    flex-shrink: 0;
+  }
+  .step:first-child .step-num { background: var(--gold); color: var(--ink); }
+  .step-title {
+    font-family: var(--serif); font-size: 20px;
+    margin-bottom: 8px; color: var(--ink);
+  }
+  .step-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 120px 48px;
+    text-align: center;
+    background: var(--paper2);
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 600px; height: 600px; border-radius: 50%;
+    border: 1px solid var(--border);
+    pointer-events: none;
+  }
+  .cta-section::after {
+    content: '';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 400px; height: 400px; border-radius: 50%;
+    border: 1px solid var(--border);
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+  .cta-inner h2 {
+    font-family: var(--serif); font-size: clamp(40px,5vw,64px);
+    line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  .cta-inner h2 em { color: var(--rust); font-style: italic; }
+  .cta-inner p { font-size: 16px; color: var(--muted); margin-bottom: 40px; line-height: 1.65; }
+  .cta-actions { display: flex; align-items: center; justify-content: center; gap: 20px; }
+  .btn-large {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 18px 44px; background: var(--ink); color: var(--paper);
+    border: none; cursor: pointer; text-decoration: none;
+    transition: transform 0.15s; display: inline-block;
+  }
+  .btn-large:hover { transform: translateY(-2px); }
+  .cta-note { font-size: 12px; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.4);
+    padding: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+  }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  footer a:hover { color: var(--gold); }
+
+  /* ── ENTRY ANIMATIONS ── */
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 400px; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .testimonials { grid-template-columns: 1fr; gap: 40px; }
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 72px 24px; }
+  }
+
+  @media (max-width: 600px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .test-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .steps::before { display: none; }
+    .hero-left { padding: 60px 24px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Stratum</a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Get early access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">Introducing Stratum 2.0</div>
+    <h1>Work at the<br><em>depth</em> you<br>were made for</h1>
+    <p class="hero-sub">Stratum strips away the noise and creates structured conditions for focused, intentional work — so you can do your best thinking every single day.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Start for free</a>
+      <a href="#features" class="btn-ghost">
+        See how it works <span class="arrow">→</span>
+      </a>
+    </div>
+    <div class="hero-stat-row">
+      <div class="stat-item">
+        <div class="stat-num">94%</div>
+        <div class="stat-label">fewer context switches</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2.4×</div>
+        <div class="stat-label">deep work per week</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">40k+</div>
+        <div class="stat-label">focused professionals</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="app-mockup">
+      <div class="mockup-titlebar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="mockup-title">Today · Monday</span>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-date">Apr 7, 2026</div>
+
+        <div class="task-block">
+          <div class="task-item done">
+            <div class="task-check checked"></div>
+            <span class="task-text">Review Q2 design brief</span>
+            <span class="task-tag tag-gold">Design</span>
+          </div>
+          <div class="task-item done">
+            <div class="task-check checked"></div>
+            <span class="task-text">Send invoice to Meridian</span>
+            <span class="task-tag tag-rust">Finance</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <span class="task-text">Finish onboarding flow draft</span>
+            <span class="task-tag tag-gold">Design</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <span class="task-text">Write engineering proposal</span>
+            <span class="task-tag tag-sage">Writing</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check"></div>
+            <span class="task-text">Weekly team sync agenda</span>
+            <span class="task-tag tag-rust">People</span>
+          </div>
+        </div>
+
+        <div class="mockup-divider"></div>
+
+        <div class="focus-bar">
+          <span class="focus-label">▶ Deep focus</span>
+          <span class="focus-timer">24:37</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-label">What makes Stratum different</div>
+  <div class="features-header">
+    <h2>Built around how you <em>actually</em> think</h2>
+    <p>Six principles, each designed to eliminate the invisible friction that fragments your day and scatters your attention.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <span class="feature-num">01</span>
+      <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="18" cy="18" r="13"/>
+        <polyline points="18,10 18,18 24,22"/>
+      </svg>
+      <div class="feature-title">Focused time blocks</div>
+      <p class="feature-desc">Schedule deep work sessions that protect your most cognitively demanding tasks from interruption. Stratum learns your peak hours and plans around them.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-num">02</span>
+      <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="6" y="8" width="24" height="20" rx="2"/>
+        <line x1="11" y1="16" x2="25" y2="16"/>
+        <line x1="11" y1="21" x2="20" y2="21"/>
+      </svg>
+      <div class="feature-title">Frictionless capture</div>
+      <p class="feature-desc">Capture tasks, ideas, and notes in under two seconds. Stratum's quick-entry bar is always one keystroke away — no context switch required.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-num">03</span>
+      <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 28 L14 18 L20 24 L26 14 L30 18"/>
+        <circle cx="30" cy="10" r="4"/>
+      </svg>
+      <div class="feature-title">Momentum tracking</div>
+      <p class="feature-desc">Visualise streaks, completion rates, and flow patterns over time. Understand exactly where your energy goes — and where to reclaim it.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-num">04</span>
+      <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M10 18 C10 12 14 8 18 8 C22 8 26 12 26 18 C26 22 23 25 18 28 C13 25 10 22 10 18Z"/>
+        <circle cx="18" cy="17" r="4"/>
+      </svg>
+      <div class="feature-title">Distraction shield</div>
+      <p class="feature-desc">A single toggle that mutes notifications, hides your inbox, and creates a distraction-free workspace. One click to enter your zone.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-num">05</span>
+      <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="24" cy="24" r="5"/>
+        <line x1="16" y1="16" x2="20" y2="20"/>
+      </svg>
+      <div class="feature-title">Smart task linking</div>
+      <p class="feature-desc">Connect related tasks across projects into coherent threads. Stratum surfaces dependencies so you always know what to tackle first.</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-num">06</span>
+      <svg class="feature-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="8" y="8" width="8" height="8" rx="1.5"/>
+        <rect x="20" y="8" width="8" height="8" rx="1.5"/>
+        <rect x="8" y="20" width="8" height="8" rx="1.5"/>
+        <rect x="20" y="20" width="8" height="8" rx="1.5"/>
+      </svg>
+      <div class="feature-title">Universal integrations</div>
+      <p class="feature-desc">Connects natively with Notion, Linear, Slack, GitHub, and your calendar. Stratum meets your stack, not the other way around.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+  <div class="section-label">The process</div>
+  <div class="how-header">
+    <h2>From chaos to clarity in four steps</h2>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-title">Capture everything</div>
+      <p class="step-desc">Dump every task, idea, and obligation into Stratum's frictionless inbox. No structure needed — just capture.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <div class="step-title">Clarify intent</div>
+      <p class="step-desc">Each item gets a clear outcome and a realistic time estimate. Stratum helps you ask: what does "done" actually look like?</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <div class="step-title">Block your day</div>
+      <p class="step-desc">Assign tasks to focused time blocks. Stratum maps your energy curve and places demanding work in your peak hours.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <div class="step-title">Work and reflect</div>
+      <p class="step-desc">Execute with your distraction shield active. Review what you completed each evening to close the loop and reset.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials">
+  <div class="test-left reveal">
+    <h2>Trusted by people who do <em>serious</em> work</h2>
+  </div>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <p class="test-quote">"Stratum made me realise how much of my day was performance rather than progress. Now I actually ship things."</p>
+      <div class="test-author">
+        <div class="test-avatar">AM</div>
+        <div>
+          <div class="test-name">Alice Morrow</div>
+          <div class="test-role">Product Lead, Axiom</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"I've tried everything. Stratum is the first tool that respects how I think rather than trying to reshape me."</p>
+      <div class="test-author">
+        <div class="test-avatar">JK</div>
+        <div>
+          <div class="test-name">Jonas Kraft</div>
+          <div class="test-role">Senior Engineer, Vercel</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"The distraction shield alone is worth it. I do more meaningful work in four hours than I used to in a full day."</p>
+      <div class="test-author">
+        <div class="test-avatar">SP</div>
+        <div>
+          <div class="test-name">Selin Patel</div>
+          <div class="test-role">Independent researcher</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"Finally a productivity tool that doesn't feel like more work to maintain. It stays out of my way and helps me stay in flow."</p>
+      <div class="test-author">
+        <div class="test-avatar">TL</div>
+        <div>
+          <div class="test-name">Tom Liu</div>
+          <div class="test-role">Founder, Driftware</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="section-label" style="justify-content:center;">Start today</div>
+    <h2>Do your best work, <em>finally</em></h2>
+    <p>Join 40,000 professionals who've reclaimed their focus. Free for 14 days, no credit card required.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-large">Get early access</a>
+    </div>
+    <p class="cta-note" style="margin-top:20px;">Free 14-day trial · No credit card · Cancel anytime</p>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Stratum Inc.</span>
+  <div style="display:flex;gap:28px;">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+  <span>Made for deep thinkers</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Party Poppers — Random Confetti</title>
+<style>
+  :root{
+    --bg:#0f1724;
+    --popper-color:#FFE082;
+    --popper-accent:#FF7043;
+    --popper-stick:#BDBDBD;
+  }
+
+  html,body{
+    height:100%;
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: radial-gradient(1200px 600px at 10% 20%, rgba(255,255,255,0.02), transparent),
+                linear-gradient(180deg, var(--bg), #071024 80%);
+    color:#e6eef8;
+    overflow:hidden;
+  }
+
+  .stage{
+    position:relative;
+    height:100vh;
+    width:100vw;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:2rem;
+    flex-direction:column;
+    padding:2rem;
+    box-sizing:border-box;
+  }
+
+  /* popper button + visual */
+  .popper-wrap{
+    position:relative;
+    display:flex;
+    gap:1rem;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+  }
+
+  .popper-btn{
+    background:linear-gradient(180deg, #ffffff10, #ffffff06);
+    border:1px solid rgba(255,255,255,0.06);
+    backdrop-filter:blur(6px);
+    padding:12px 20px;
+    border-radius:14px;
+    color:var(--popper-accent);
+    font-weight:600;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+  }
+  .popper-btn:active{ transform: translateY(1px) scale(0.995); }
+
+  .popper-svg{
+    width:72px;
+    height:72px;
+    transform-origin:center bottom;
+  }
+
+  /* confetti pieces container (cover whole screen) */
+  .confetti-layer{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:10;
+  }
+
+  /* each piece base */
+  .piece{
+    position:absolute;
+    will-change: transform, opacity;
+    opacity:1;
+    transform-origin:center;
+    mix-blend-mode: screen;
+  }
+
+  /* shapes */
+  .piece.rect{ width:10px; height:18px; border-radius:2px; }
+  .piece.circle{ width:12px; height:12px; border-radius:50%; }
+  .piece.tri{
+    width:0; height:0;
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    border-bottom:14px solid;
+  }
+
+  /* small sparkle pseudo animation */
+  @keyframes sparkle {
+    0%{ filter:brightness(1) saturate(1); }
+    50%{ filter:brightness(1.5) saturate(1.2); transform: scale(1.05) rotate(5deg); }
+    100%{ filter:brightness(1) saturate(1); }
+  }
+
+  .caption{
+    font-size:14px;
+    color:#9fb2d8;
+    opacity:0.9;
+  }
+
+  /* subtle floating of popper before pop */
+  @keyframes bob {
+    0%{ transform: translateY(0) rotate(-6deg); }
+    50%{ transform: translateY(-6px) rotate(-2deg); }
+    100%{ transform: translateY(0) rotate(-6deg); }
+  }
+  .popper-svg .tube { animation: bob 2200ms ease-in-out infinite; transform-origin:center; }
+
+  /* streamer curl animation when spawned (used via inline style) */
+  @keyframes fadeOut {
+    to { opacity:0; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width:640px){
+    .popper-svg{ width:56px; height:56px; }
+    .popper-btn{ padding:10px 14px; font-size:14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="popper-wrap" aria-hidden="false">
+      <!-- SVG party popper -->
+      <svg class="popper-svg" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- confetti burst placeholder (will animate in JS) -->
+        <g class="burst" opacity="0"></g>
+
+        <!-- tube -->
+        <g class="tube">
+          <path d="M22 45 L46 12 L60 24 L36 57 Z" fill="url(#g1)" stroke="#00000008"/>
+          <linearGradient id="g1" x1="0" x2="1">
+            <stop offset="0" stop-color="#fff7dc" stop-opacity=".9"/>
+            <stop offset="1" stop-color="#ffd27a"/>
+          </linearGradient>
+          <rect x="26" y="52" width="28" height="6" rx="2" transform="rotate(-18 26 52)" fill="#d0d0d0" opacity="0.7"/>
+          <circle cx="32" cy="49" r="3.5" fill="#fff" opacity=".12"/>
+        </g>
+        <!-- ribbon / accent -->
+        <path d="M30 38 C36 34, 42 36, 46 40" stroke="#FF7043" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+      </svg>
+
+      <button id="popBtn" class="popper-btn" aria-pressed="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:block">
+          <path d="M12 2v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 7h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 15h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Celebrate!
+      </button>
+    </div>
+
+    <div class="caption">Click the popper to burst colorful streamers and confetti everywhere 🎉</div>
+
+    <div id="confetti" class="confetti-layer" aria-hidden="true"></div>
+  </div>
+
+<script>
+/* Party popper confetti implementation
+   - Randomly spawns pieces (rect, circle, triangle) from the popper position
+   - Each piece gets random velocity, rotation speed, life, and color
+   - Uses requestAnimationFrame for smooth physics-like motion
+*/
+
+(function(){
+  const confettiLayer = document.getElementById('confetti');
+  const popBtn = document.getElementById('popBtn');
+  const svg = document.querySelector('.popper-svg');
+
+  // Colors palette — tweak as you like
+  const COLORS = [
+    '#FF5252', '#FFB86B', '#FFD54F', '#66E2AE', '#7CC4FF', '#B388FF', '#FF6FA3', '#FFE082'
+  ];
+
+  // Precompute stage bounds
+  function getStageRect(){
+    return { width: window.innerWidth, height: window.innerHeight };
+  }
+
+  // Utility random
+  const rand = (min, max) => Math.random()*(max-min)+min;
+
+  // Convert popper svg position to page coordinates
+  function getPopperOrigin(){
+    const rect = svg.getBoundingClientRect();
+    // spawn near the mouth of the popper (approx)
+    return { x: rect.left + rect.width*0.65, y: rect.top + rect.height*0.35 };
+  }
+
+  // Create a piece DOM element with initial style
+  function createPiece(type, color){
+    const el = document.createElement('div');
+    el.className = 'piece ' + type;
+    if(type === 'tri') {
+      // tri uses border-bottom trick; set border color
+      el.style.borderBottomColor = color;
+    } else {
+      el.style.background = color;
+    }
+    // small shadow / glow
+    el.style.boxShadow = '0 4px 10px rgba(0,0,0,0.15)';
+    return el;
+  }
+
+  // Physics update for pieces
+  class Particle {
+    constructor(opts){
+      this.el = opts.el;
+      this.x = opts.x;
+      this.y = opts.y;
+      // velocity px/sec
+      this.vx = opts.vx;
+      this.vy = opts.vy;
+      // rotation (deg) and rotational velocity deg/sec
+      this.r = rand(-360,360);
+      this.rv = rand(-900,900);
+      this.scale = opts.scale || 1;
+      this.life = opts.life; // seconds
+      this.age = 0;
+      this.fadeStart = opts.fadeStart || this.life*0.6;
+      // random wiggle amplitude
+      this.wiggle = rand(0.6, 1.6);
+      this.el.style.transform = `translate(${this.x}px, ${this.y}px) rotate(${this.r}deg) scale(${this.scale})`;
+      confettiLayer.appendChild(this.el);
+    }
+    update(dt){
+      // gravity
+      const g = 1200; // px/s^2 stronger for a snappy fall
+      // air drag
+      const drag = 0.98;
+
+      // apply velocities
+      this.vy += g * dt;
+      this.vx *= Math.pow(drag, dt*60);
+      this.vy *= Math.pow(drag, dt*60);
+
+      // update position
+      this.x += this.vx * dt;
+      this.y += this.vy * dt;
+
+      // small lateral sinusoidal wiggle for streamers
+      this.x += Math.sin((this.age + this.r)*5) * 0.2 * this.wiggle;
+
+      // update rotation
+      this.r += this.rv * dt;
+
+      // age and opacity
+      this.age += dt;
+      let opacity = 1;
+      if(this.age > this.fadeStart){
+        let t = (this.age - this.fadeStart) / (this.life - this.fadeStart);
+        opacity = Math.max(0, 1 - t);
+      }
+      this.el.style.opacity = opacity.toFixed(3);
+
+      // translate
+      this.el.style.transform = `translate(${this.x}px, ${this.y}px) rotate(${this.r}deg) scale(${this.scale})`;
+    }
+    isDead(){
+      // die when off-screen or past life
+      const stage = getStageRect();
+      return (this.age > this.life + 0.2) || (this.x < -200 || this.x > stage.width + 200 || this.y > stage.height + 200);
+    }
+    remove(){
+      if(this.el && this.el.parentNode) this.el.parentNode.removeChild(this.el);
+    }
+  }
+
+  // particle list
+  const particles = [];
+
+  // spawn burst at location with intensity (# pieces)
+  function spawnBurst(originX, originY, intensity = 40){
+    const stage = getStageRect();
+    for(let i=0;i<intensity;i++){
+      // choose shape
+      const types = ['rect','circle','tri'];
+      const type = types[Math.floor(Math.random()*types.length)];
+      const color = COLORS[Math.floor(Math.random()*COLORS.length)];
+      const el = createPiece(type, color);
+
+      // size & scale
+      let scale = 1;
+      if(type === 'rect') scale = rand(0.7,1.25);
+      if(type === 'circle') scale = rand(0.7,1.1);
+      if(type === 'tri') scale = rand(0.8,1.3);
+
+      // spawn random offset around origin (so pieces appear not all in one pixel)
+      const sx = originX + rand(-12,22);
+      const sy = originY + rand(-8,12);
+
+      // initial velocity: prefer upward/outward spread
+      const angle = rand(-Math.PI*0.9, -Math.PI*0.1); // roughly upward hemisphere
+      const speed = rand(250, 1200); // px/sec
+      const vx = Math.cos(angle)*speed + rand(-60,60);
+      const vy = Math.sin(angle)*speed + rand(-60,60);
+
+      // lifetime
+      const life = rand(1.2, 3.2);
+      const p = new Particle({ el, x: sx, y: sy, vx, vy, life, scale, fadeStart: Math.max(0.5, life*0.5) });
+      particles.push(p);
+      // small random sparkle animation for some pieces
+      if(Math.random() < 0.14){
+        el.style.animation = 'sparkle ' + rand(900,2000) + 'ms ease-in-out infinite';
+      }
+    }
+
+    // small visual 'burst' on svg (temporary)
+    animateSVGBurst(originX, originY);
+  }
+
+  // simple SVG burst visual anchored to popper (converted to local coordinates)
+  function animateSVGBurst(px, py){
+    const burstGroup = document.querySelector('.popper-svg .burst');
+    // compute relative coords inside svg
+    const svgRect = svg.getBoundingClientRect();
+    const localX = px - svgRect.left;
+    const localY = py - svgRect.top;
+    // create colorful rays
+    burstGroup.innerHTML = '';
+    const rays = 8;
+    for(let i=0;i<rays;i++){
+      const angle = (i/rays)*Math.PI*2 + rand(-0.18,0.18);
+      const len = rand(8,28);
+      const color = COLORS[Math.floor(Math.random()*COLORS.length)];
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1', localX);
+      line.setAttribute('y1', localY);
+      line.setAttribute('x2', localX + Math.cos(angle)*len);
+      line.setAttribute('y2', localY + Math.sin(angle)*len);
+      line.setAttribute('stroke', color);
+      line.setAttribute('stroke-width', rand(1.4,3));
+      line.setAttribute('stroke-linecap','round');
+      line.style.opacity = 1;
+      burstGroup.appendChild(line);
+
+      // animate fade & outward
+      setTimeout(()=> { line.style.transition = 'transform 420ms cubic-bezier(.2,.9,.3,1), opacity 420ms'; 
+                        line.style.transform = `translate(${Math.cos(angle)*18}px, ${Math.sin(angle)*18}px) scale(0.95)`;
+                        line.style.opacity = 0; }, 10);
+    }
+    // clear after short time
+    setTimeout(()=> burstGroup.innerHTML = '', 520);
+  }
+
+  // main animation loop
+  let last = performance.now();
+  function frame(now){
+    const dt = Math.min(0.032, (now-last)/1000); // limit dt
+    last = now;
+    for(let i = particles.length-1; i>=0; i--){
+      const p = particles[i];
+      p.update(dt);
+      if(p.isDead()){
+        p.remove();
+        particles.splice(i,1);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // Click handler: spawn burst from popper origin; vibrate popper visually
+  popBtn.addEventListener('click', (ev)=>{
+    const origin = getPopperOrigin();
+    // spawn multiple bursts so pieces spread widely
+    spawnBurst(origin.x, origin.y, Math.floor(rand(20,40)));
+    // small delay spawn for variety
+    setTimeout(()=> spawnBurst(origin.x - rand(0,20), origin.y + rand(-6,6), Math.floor(rand(8,20))), 80);
+
+    // animate the svg pop motion
+    svg.animate([
+      { transform: 'translateY(0) scale(1)' },
+      { transform: 'translateY(-10px) rotate(-6deg) scale(1.02)' },
+      { transform: 'translateY(0) scale(1)' }
+    ], { duration: 420, easing: 'cubic-bezier(.2,.9,.3,1)' });
+
+    // quick sparkle on button
+    popBtn.animate([{ boxShadow:'0 6px 20px rgba(255,120,80,0.06)' }, { boxShadow:'0 14px 40px rgba(255,120,80,0.14)' }, { boxShadow:'0 6px 20px rgba(255,120,80,0.06)'}], { duration: 420 });
+
+    // accessibility: toggle aria pressed for instant feedback (reverts)
+    popBtn.setAttribute('aria-pressed','true');
+    setTimeout(()=> popBtn.setAttribute('aria-pressed','false'), 600);
+  });
+
+  // Also auto-burst once on load for fun
+  window.addEventListener('load', ()=>{
+    setTimeout(()=> popBtn.click(), 700);
+  });
+
+  // resize safe: no special handling required; particles check stage bounds each frame
+  window.addEventListener('resize', ()=>{ /* nothing to do, stage read on demand */ });
+
+  // Allow keyboard activation (Enter/Space)
+  popBtn.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      popBtn.click();
+    }
+  });
+
+  // For UX: clicking anywhere on stage also does small bursts (optional)
+  document.body.addEventListener('click', (e)=>{
+    // avoid when clicking the button itself (already handled)
+    if(e.target.closest('.popper-btn')) return;
+    // small localized burst where user clicked
+    const originX = e.clientX;
+    const originY = e.clientY;
+    spawnBurst(originX, originY, Math.floor(rand(6,16)));
+  });
+
+})();
+</script>
+</body>
+</html>

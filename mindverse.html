@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindverse360° — Building Pakistan's Future Founders</title>
+<meta name="description" content="Pakistan's first integrated Entrepreneurial, Leadership & Innovation Ecosystem. Transforming technical talent into founders, builders, and leaders.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #FF5500;
+  --orange-light: #FF7733;
+  --orange-glow: rgba(255,85,0,0.25);
+  --black: #080808;
+  --dark: #0E0E0E;
+  --dark2: #141414;
+  --dark3: #1A1A1A;
+  --white: #FFFFFF;
+  --off-white: #F0EDE8;
+  --grey: #888888;
+  --light-grey: #CCCCCC;
+  --border: rgba(255,255,255,0.08);
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--orange); }
+
+/* ── UTILITY ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.section { padding: 8rem 0; }
+.section--sm { padding: 5rem 0; }
+.tag {
+  display: inline-block; font-family: var(--font-display); font-size: 0.7rem;
+  font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--orange); border: 1px solid var(--orange-glow);
+  background: rgba(255,85,0,0.08); padding: 0.35rem 1rem; border-radius: 2rem;
+  margin-bottom: 1.5rem;
+}
+h1,h2,h3,h4,h5 { font-family: var(--font-display); font-weight: 800; line-height: 1.1; }
+p { color: rgba(255,255,255,0.65); }
+a { text-decoration: none; color: inherit; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase; padding: 0.9rem 2rem;
+  border-radius: 0.25rem; cursor: pointer; border: none;
+  transition: all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+  position: relative; overflow: hidden;
+}
+.btn::after {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(255,255,255,0.1); opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn:hover::after { opacity: 1; }
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primary {
+  background: var(--orange); color: var(--white);
+  box-shadow: 0 0 30px var(--orange-glow);
+}
+.btn-primary:hover { box-shadow: 0 0 50px rgba(255,85,0,0.5); }
+
+.btn-outline {
+  background: transparent; color: var(--white);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+.btn-ghost {
+  background: rgba(255,255,255,0.06); color: var(--white);
+  border: 1px solid var(--border);
+}
+
+/* ── CANVAS BACKGROUND ── */
+#bg-canvas {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: 0.4;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 1.25rem 0; transition: all 0.4s ease;
+}
+.nav.scrolled {
+  background: rgba(8,8,8,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.85rem 0;
+}
+.nav__inner {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav__logo {
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 800;
+  letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.3rem;
+}
+.nav__logo span { color: var(--orange); }
+.nav__links {
+  display: flex; align-items: center; gap: 2.5rem;
+  list-style: none;
+}
+.nav__links a {
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em;
+  text-transform: uppercase; color: rgba(255,255,255,0.7);
+  transition: color 0.3s; position: relative;
+}
+.nav__links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+  background: var(--orange); transition: width 0.3s;
+}
+.nav__links a:hover { color: var(--white); }
+.nav__links a:hover::after { width: 100%; }
+.nav__cta { display: flex; gap: 0.75rem; align-items: center; }
+.nav__hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  background: none; border: none; padding: 5px;
+}
+.nav__hamburger span {
+  display: block; width: 24px; height: 2px; background: var(--white);
+  transition: all 0.3s;
+}
+.nav__mobile {
+  display: none; position: fixed; inset: 0; background: var(--black);
+  z-index: 999; flex-direction: column; align-items: center;
+  justify-content: center; gap: 2.5rem;
+}
+.nav__mobile.active { display: flex; }
+.nav__mobile a {
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: 800;
+  color: var(--white); transition: color 0.3s;
+}
+.nav__mobile a:hover { color: var(--orange); }
+.nav__mobile-close {
+  position: absolute; top: 1.5rem; right: 2rem; background: none; border: none;
+  color: var(--white); font-size: 2rem; cursor: pointer;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative; min-height: 100vh; display: flex;
+  align-items: center; overflow: hidden; padding: 7rem 0 5rem;
+}
+.hero__bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 80% 50% at 60% 40%, rgba(255,85,0,0.12) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 60% at 10% 80%, rgba(255,85,0,0.06) 0%, transparent 60%);
+}
+.hero__grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+.hero__content { position: relative; z-index: 1; max-width: 760px; }
+.hero__eyebrow {
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
+}
+.hero__line { width: 40px; height: 2px; background: var(--orange); }
+.hero__eyebrow-text {
+  font-family: var(--font-display); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.25em; text-transform: uppercase; color: var(--orange);
+}
+.hero__title {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  margin-bottom: 1.5rem; letter-spacing: -0.03em;
+}
+.hero__title em {
+  font-style: normal; color: var(--orange);
+  text-shadow: 0 0 60px rgba(255,85,0,0.4);
+}
+.hero__subtitle {
+  font-size: 1.15rem; color: rgba(255,255,255,0.6);
+  max-width: 540px; line-height: 1.7; margin-bottom: 3rem;
+}
+.hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero__scroll {
+  position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 1;
+  animation: bounce 2s infinite;
+}
+.hero__scroll span {
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.hero__scroll-dot {
+  width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(255,85,0,0.8), transparent);
+}
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+.hero__stats {
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 2rem; z-index: 1;
+}
+.hero__stat {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  backdrop-filter: blur(10px); padding: 1.5rem; border-radius: 0.5rem;
+  min-width: 140px; text-align: center;
+  transition: border-color 0.3s;
+}
+.hero__stat:hover { border-color: var(--orange); }
+.hero__stat-num {
+  font-family: var(--font-display); font-size: 2rem; font-weight: 800;
+  color: var(--orange); display: block;
+}
+.hero__stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
+
+/* ── LOGO MARQUEE ── */
+.marquee-section {
+  padding: 3rem 0; border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border); overflow: hidden;
+  background: rgba(255,255,255,0.02);
+}
+.marquee-label {
+  text-align: center; font-size: 0.7rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 2rem;
+}
+.marquee-track { display: flex; overflow: hidden; }
+.marquee-row { display: flex; gap: 4rem; align-items: center; width: 100%; margin-bottom: 1.5rem; }
+.marquee-inner {
+  display: flex; gap: 4rem; align-items: center;
+  animation: marquee-left 20s linear infinite; white-space: nowrap;
+}
+.marquee-inner.right { animation: marquee-right 20s linear infinite; }
+.marquee-track:hover .marquee-inner { animation-play-state: paused; }
+.logo-pill {
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  padding: 0.75rem 2rem; border-radius: 0.5rem; min-width: 140px;
+  font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+  color: rgba(255,255,255,0.4); transition: all 0.3s; cursor: pointer;
+  white-space: nowrap;
+}
+.logo-pill:hover { color: var(--orange); border-color: var(--orange); transform: scale(1.05); box-shadow: 0 0 20px var(--orange-glow); }
+@keyframes marquee-left { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes marquee-right { 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
+
+/* ── PROBLEM SECTION ── */
+.problem { background: var(--dark2); position: relative; overflow: hidden; }
+.problem__accent {
+  position: absolute; right: -200px; top: 50%; transform: translateY(-50%);
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,85,0,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.problem__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.problem__left { }
+.problem__title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
+.problem__text { margin-bottom: 2rem; }
+.problem__items { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+.problem__item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.25rem; border-left: 2px solid var(--orange);
+  background: rgba(255,85,0,0.04); border-radius: 0 0.5rem 0.5rem 0;
+  transition: background 0.3s;
+}
+.problem__item:hover { background: rgba(255,85,0,0.08); }
+.problem__item-num {
+  font-family: var(--font-display); font-size: 0.7rem; font-weight: 700;
+  color: var(--orange); letter-spacing: 0.1em; padding-top: 0.25rem;
+}
+.problem__item-text { font-size: 0.95rem; color: rgba(255,255,255,0.75); }
+.problem__right { display: flex; flex-direction: column; gap: 1.5rem; }
+.stat-card {
+  background: var(--dark3); border: 1px solid var(--border); padding: 2rem;
+  border-radius: 0.75rem; transition: all 0.3s;
+}
+.stat-card:hover { border-color: var(--orange); transform: translateX(8px); }
+.stat-card__num {
+  font-family: var(--font-display); font-size: 3rem; font-weight: 800;
+  color: var(--orange); margin-bottom: 0.5rem;
+}
+.stat-card__desc { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+
+/* ── ECOSYSTEM ── */
+.ecosystem { position: relative; }
+.ecosystem__header { text-align: center; max-width: 650px; margin: 0 auto 5rem; }
+.ecosystem__title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
+.ecosystem__map {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; flex-wrap: nowrap; position: relative;
+  overflow-x: auto; padding: 2rem 0;
+}
+.eco-node {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1rem; min-width: 140px; position: relative; z-index: 1;
+  cursor: pointer;
+}
+.eco-node:hover .eco-circle { transform: scale(1.1); box-shadow: 0 0 40px var(--orange-glow); }
+.eco-circle {
+  width: 90px; height: 90px; border-radius: 50%;
+  background: var(--dark3); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; transition: all 0.4s; position: relative;
+}
+.eco-circle.active {
+  border-color: var(--orange); background: rgba(255,85,0,0.1);
+  box-shadow: 0 0 30px var(--orange-glow);
+}
+.eco-label {
+  font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+  text-align: center; color: rgba(255,255,255,0.8);
+}
+.eco-arrow {
+  width: 60px; height: 2px;
+  background: linear-gradient(to right, var(--orange), rgba(255,85,0,0.3));
+  flex-shrink: 0; position: relative;
+}
+.eco-arrow::after {
+  content: ''; position: absolute; right: -5px; top: 50%;
+  transform: translateY(-50%);
+  border-top: 5px solid transparent; border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--orange);
+}
+
+/* ── PROGRAMS ── */
+.programs { background: var(--dark2); }
+.programs__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 4rem; }
+.programs__title { font-size: clamp(2rem, 4vw, 3rem); max-width: 500px; }
+.programs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.program-card {
+  background: var(--dark3); border: 1px solid var(--border);
+  border-radius: 1rem; padding: 2.5rem; transition: all 0.4s;
+  position: relative; overflow: hidden; cursor: pointer;
+}
+.program-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--orange); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s;
+}
+.program-card:hover { border-color: rgba(255,85,0,0.3); transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+.program-card:hover::before { transform: scaleX(1); }
+.program-card__icon {
+  width: 56px; height: 56px; border-radius: 0.75rem;
+  background: rgba(255,85,0,0.1); border: 1px solid rgba(255,85,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 1.5rem;
+}
+.program-card__cat {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 0.75rem;
+}
+.program-card__title {
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.program-card__desc { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.6; margin-bottom: 1.5rem; }
+.program-card__link {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--orange);
+  transition: gap 0.3s;
+}
+.program-card:hover .program-card__link { gap: 1rem; }
+
+/* ── METRICS ── */
+.metrics { text-align: center; }
+.metrics__title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
+.metrics__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 4rem; }
+.metric-box {
+  padding: 3rem 2rem;
+  border: 1px solid var(--border); border-radius: 1rem;
+  background: rgba(255,255,255,0.02);
+  transition: all 0.4s; position: relative; overflow: hidden;
+}
+.metric-box::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,85,0,0.06) 0%, transparent 70%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.metric-box:hover { border-color: var(--orange); transform: scale(1.03); }
+.metric-box:hover::before { opacity: 1; }
+.metric-num {
+  font-family: var(--font-display); font-size: 3.5rem; font-weight: 800;
+  color: var(--orange); display: block; margin-bottom: 0.5rem;
+}
+.metric-label { font-size: 0.9rem; color: rgba(255,255,255,0.55); }
+
+/* ── FOUNDERS ── */
+.founders { background: var(--dark2); }
+.founders__header { text-align: center; margin-bottom: 4rem; }
+.founders__title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
+.founders__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.founder-card {
+  border: 1px solid var(--border); border-radius: 1rem; overflow: hidden;
+  background: var(--dark3); transition: all 0.4s; cursor: pointer;
+}
+.founder-card:hover { border-color: var(--orange); transform: translateY(-10px); box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 30px var(--orange-glow); }
+.founder-card__img {
+  width: 100%; height: 280px; object-fit: cover;
+  background: linear-gradient(135deg, var(--dark3) 0%, rgba(255,85,0,0.1) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem;
+}
+.founder-card__body { padding: 2rem; }
+.founder-card__name {
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+.founder-card__role { color: var(--orange); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+.founder-card__bio { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+.founder-card__socials { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+.social-btn {
+  width: 36px; height: 36px; border-radius: 0.5rem;
+  background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.875rem; transition: all 0.3s; cursor: pointer;
+}
+.social-btn:hover { background: var(--orange); border-color: var(--orange); }
+
+/* ── TESTIMONIALS ── */
+.testimonials { overflow: hidden; }
+.testimonials__header { text-align: center; margin-bottom: 4rem; }
+.testimonials__title { font-size: clamp(2rem, 4vw, 3rem); }
+.testimonials__track { display: flex; gap: 2rem; overflow: hidden; }
+.testimonial-card {
+  background: var(--dark3); border: 1px solid var(--border); border-radius: 1rem;
+  padding: 2.5rem; min-width: 380px; flex-shrink: 0;
+  transition: border-color 0.3s;
+}
+.testimonial-card:hover { border-color: var(--orange); }
+.testimonial-quote {
+  font-size: 2rem; color: var(--orange); margin-bottom: 1rem; line-height: 1;
+}
+.testimonial-text {
+  font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.7;
+  margin-bottom: 1.5rem; font-style: italic;
+}
+.testimonial-author { display: flex; align-items: center; gap: 1rem; }
+.testimonial-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,85,0,0.2); border: 2px solid var(--orange);
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+}
+.testimonial-name {
+  font-family: var(--font-display); font-size: 0.9rem; font-weight: 700;
+}
+.testimonial-role { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+/* ── EVENTS ── */
+.events { background: var(--dark2); }
+.events__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 3rem; }
+.events__title { font-size: clamp(2rem, 4vw, 3rem); }
+.events__grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2rem; }
+.event-featured {
+  background: var(--dark3); border: 1px solid var(--border); border-radius: 1rem;
+  overflow: hidden; cursor: pointer; transition: all 0.4s;
+}
+.event-featured:hover { border-color: var(--orange); }
+.event-img {
+  height: 240px;
+  background: linear-gradient(135deg, rgba(255,85,0,0.2) 0%, rgba(255,85,0,0.05) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4rem; position: relative;
+}
+.event-badge {
+  position: absolute; top: 1rem; left: 1rem;
+  background: var(--orange); color: var(--white);
+  font-family: var(--font-display); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.75rem;
+  border-radius: 0.25rem;
+}
+.event-featured__body { padding: 2rem; }
+.event-featured__date { color: var(--orange); font-size: 0.8rem; font-weight: 600; margin-bottom: 0.75rem; }
+.event-featured__title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.75rem; }
+.event-featured__desc { font-size: 0.875rem; color: rgba(255,255,255,0.55); }
+.events__list { display: flex; flex-direction: column; gap: 1rem; }
+.event-item {
+  background: var(--dark3); border: 1px solid var(--border); border-radius: 0.75rem;
+  padding: 1.5rem; display: flex; gap: 1.25rem; align-items: center;
+  cursor: pointer; transition: all 0.3s;
+}
+.event-item:hover { border-color: var(--orange); transform: translateX(6px); }
+.event-date-box {
+  min-width: 56px; height: 56px; background: rgba(255,85,0,0.1);
+  border: 1px solid rgba(255,85,0,0.2); border-radius: 0.5rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+}
+.event-day { font-size: 1.3rem; font-weight: 800; color: var(--orange); line-height: 1; }
+.event-month { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+.event-info { flex: 1; }
+.event-item-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+.event-item-type { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+/* ── VENTURE ── */
+.venture { position: relative; overflow: hidden; }
+.venture__glow {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,85,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.venture__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.venture__title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
+.venture__text { margin-bottom: 2rem; }
+.venture__steps { display: flex; flex-direction: column; gap: 0; }
+.venture__step {
+  display: flex; gap: 1.5rem; padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.venture__step:last-child { border-bottom: none; }
+.venture__step-num {
+  font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;
+  color: var(--orange); min-width: 40px;
+}
+.venture__step-title { font-family: var(--font-display); font-weight: 700; margin-bottom: 0.25rem; }
+.venture__step-desc { font-size: 0.875rem; color: rgba(255,255,255,0.5); }
+.venture__visual {
+  background: var(--dark3); border: 1px solid var(--border); border-radius: 1.5rem;
+  padding: 3rem; display: flex; flex-direction: column; gap: 1.5rem;
+}
+.venture__orbit {
+  display: flex; align-items: center; justify-content: center;
+  height: 240px; position: relative;
+}
+.orbit-center {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--orange); display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; position: relative; z-index: 2;
+  box-shadow: 0 0 40px var(--orange-glow);
+}
+.orbit-ring {
+  position: absolute; border-radius: 50%; border: 1px dashed rgba(255,85,0,0.3);
+  animation: spin 15s linear infinite;
+}
+.orbit-ring:nth-child(2) { width: 140px; height: 140px; animation-duration: 10s; }
+.orbit-ring:nth-child(3) { width: 200px; height: 200px; animation-duration: 18s; animation-direction: reverse; }
+.orbit-dot {
+  position: absolute; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--orange); top: -5px; left: 50%; transform: translateX(-50%);
+}
+@keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+
+/* ── NEWSLETTER ── */
+.newsletter {
+  background: linear-gradient(135deg, rgba(255,85,0,0.15) 0%, transparent 60%),
+              var(--dark2);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.newsletter__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.newsletter__title { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 0.75rem; }
+.newsletter__text { color: rgba(255,255,255,0.55); }
+.newsletter__form { display: flex; gap: 1rem; }
+.newsletter__input {
+  flex: 1; background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+  color: var(--white); padding: 0.9rem 1.5rem; border-radius: 0.25rem;
+  font-family: var(--font-body); font-size: 0.9rem;
+  transition: border-color 0.3s; outline: none;
+}
+.newsletter__input:focus { border-color: var(--orange); }
+.newsletter__input::placeholder { color: rgba(255,255,255,0.3); }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  text-align: center; padding: 10rem 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,85,0,0.12) 0%, transparent 70%);
+  position: relative;
+}
+.cta-section__title { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+.cta-section__subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.55); max-width: 500px; margin: 0 auto 3rem; }
+.cta-section__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark2); border-top: 1px solid var(--border); padding: 5rem 0 2rem;
+}
+.footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+.footer__brand-name {
+  font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;
+  margin-bottom: 1rem;
+}
+.footer__brand-name span { color: var(--orange); }
+.footer__brand-desc { font-size: 0.875rem; color: rgba(255,255,255,0.45); line-height: 1.7; margin-bottom: 1.5rem; }
+.footer__socials { display: flex; gap: 0.75rem; }
+.footer__col-title {
+  font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 1.5rem;
+}
+.footer__links { display: flex; flex-direction: column; gap: 0.75rem; list-style: none; }
+.footer__links a {
+  font-size: 0.875rem; color: rgba(255,255,255,0.55); transition: color 0.3s;
+}
+.footer__links a:hover { color: var(--orange); }
+.footer__bottom {
+  border-top: 1px solid var(--border); padding-top: 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer__copy { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+.footer__bottom-links { display: flex; gap: 2rem; }
+.footer__bottom-links a { font-size: 0.8rem; color: rgba(255,255,255,0.3); transition: color 0.3s; }
+.footer__bottom-links a:hover { color: var(--orange); }
+
+/* ── MODAL / PAGES ── */
+.page-modal {
+  position: fixed; inset: 0; background: var(--black); z-index: 2000;
+  overflow-y: auto; display: none; transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.page-modal.active { display: block; transform: translateX(0); }
+.page-modal__nav {
+  position: sticky; top: 0; background: rgba(8,8,8,0.92);
+  backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+  padding: 1.25rem 2rem; display: flex; align-items: center;
+  justify-content: space-between; z-index: 100;
+}
+.page-modal__back {
+  display: flex; align-items: center; gap: 0.75rem; cursor: pointer;
+  color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 600;
+  transition: color 0.3s; background: none; border: none;
+}
+.page-modal__back:hover { color: var(--orange); }
+.page-modal__title {
+  font-family: var(--font-display); font-size: 0.9rem; font-weight: 800;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.page-hero {
+  padding: 6rem 2rem 4rem;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,85,0,0.1) 0%, transparent 60%);
+}
+.page-hero__tag { display: block; margin-bottom: 1.5rem; }
+.page-hero__title {
+  font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem;
+  max-width: 700px; margin-left: auto; margin-right: auto; text-align: center;
+}
+.page-hero__desc {
+  font-size: 1.1rem; color: rgba(255,255,255,0.6);
+  max-width: 600px; margin: 0 auto; text-align: center; line-height: 1.7;
+}
+.page-content { max-width: 1100px; margin: 0 auto; padding: 0 2rem 6rem; }
+.content-section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+.content-section:last-child { border-bottom: none; }
+.content-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.content-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+/* ── CONTACT FORM ── */
+.form-group { margin-bottom: 1.5rem; }
+.form-label {
+  display: block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem;
+}
+.form-input, .form-textarea, .form-select {
+  width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  color: var(--white); padding: 0.9rem 1.25rem; border-radius: 0.4rem;
+  font-family: var(--font-body); font-size: 0.9rem; outline: none;
+  transition: border-color 0.3s;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--orange); }
+.form-textarea { resize: vertical; min-height: 140px; }
+.form-select option { background: var(--dark3); }
+
+/* ── FAQ ── */
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-question {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.75rem 0; cursor: pointer; font-family: var(--font-display);
+  font-size: 1rem; font-weight: 700; transition: color 0.3s;
+}
+.faq-question:hover { color: var(--orange); }
+.faq-icon {
+  width: 32px; height: 32px; border-radius: 50%; background: rgba(255,85,0,0.1);
+  border: 1px solid rgba(255,85,0,0.2); display: flex; align-items: center;
+  justify-content: center; font-size: 1rem; color: var(--orange);
+  transition: transform 0.3s; flex-shrink: 0;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-answer {
+  font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.7;
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s;
+}
+.faq-item.open .faq-answer { max-height: 400px; padding-bottom: 1.75rem; }
+
+/* ── WAVE DIVIDER ── */
+.wave-divider { position: relative; height: 80px; overflow: hidden; }
+.wave-divider svg { width: 100%; height: 100%; }
+
+/* ── ANIMATIONS ── */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── WHATSAPP ── */
+.whatsapp-btn {
+  position: fixed; bottom: 2rem; right: 2rem; width: 56px; height: 56px;
+  background: #25D366; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  cursor: pointer; z-index: 999; transition: transform 0.3s; border: none;
+  text-decoration: none; color: var(--white);
+}
+.whatsapp-btn:hover { transform: scale(1.1); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .programs__grid { grid-template-columns: repeat(2, 1fr); }
+  .metrics__grid { grid-template-columns: repeat(2, 1fr); }
+  .footer__grid { grid-template-columns: 1fr 1fr; }
+  .hero__stats { display: none; }
+}
+@media (max-width: 768px) {
+  .nav__links, .nav__cta { display: none; }
+  .nav__hamburger { display: flex; }
+  .problem__grid { grid-template-columns: 1fr; gap: 3rem; }
+  .programs__grid { grid-template-columns: 1fr; }
+  .founders__grid { grid-template-columns: 1fr; }
+  .events__grid { grid-template-columns: 1fr; }
+  .venture__inner { grid-template-columns: 1fr; gap: 3rem; }
+  .newsletter__inner { grid-template-columns: 1fr; gap: 2rem; }
+  .newsletter__form { flex-direction: column; }
+  .footer__grid { grid-template-columns: 1fr; gap: 2rem; }
+  .programs__header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .events__header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .content-grid-2, .content-grid-3 { grid-template-columns: 1fr; }
+  .ecosystem__map { justify-content: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- Canvas Background -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/923001234567" class="whatsapp-btn" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo" onclick="showPage('home')">Mindverse<span>360°</span></a>
+      <ul class="nav__links">
+        <li><a href="#" onclick="showPage('about')">About</a></li>
+        <li><a href="#" onclick="showPage('programs')">Programs</a></li>
+        <li><a href="#" onclick="showPage('venture')">Ventures</a></li>
+        <li><a href="#" onclick="showPage('events')">Events</a></li>
+        <li><a href="#" onclick="showPage('team')">Team</a></li>
+        <li><a href="#" onclick="showPage('blog')">Insights</a></li>
+        <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+      </ul>
+      <div class="nav__cta">
+        <button class="btn btn-outline" onclick="showPage('partner')">Partner With Us</button>
+        <button class="btn btn-primary" onclick="showPage('apply')">Apply Now →</button>
+      </div>
+      <button class="nav__hamburger" id="hamburger" onclick="toggleMobile()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="nav__mobile" id="mobile-menu">
+  <button class="nav__mobile-close" onclick="toggleMobile()">✕</button>
+  <a href="#" onclick="showPage('about');toggleMobile()">About</a>
+  <a href="#" onclick="showPage('programs');toggleMobile()">Programs</a>
+  <a href="#" onclick="showPage('venture');toggleMobile()">Ventures</a>
+  <a href="#" onclick="showPage('events');toggleMobile()">Events</a>
+  <a href="#" onclick="showPage('team');toggleMobile()">Team</a>
+  <a href="#" onclick="showPage('contact');toggleMobile()">Contact</a>
+  <button class="btn btn-primary" onclick="showPage('apply');toggleMobile()">Apply Now →</button>
+</div>
+
+<!-- ═══════════ HOME PAGE ═══════════ -->
+<main id="home-page">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__grid"></div>
+  <div class="container" style="position:relative;z-index:1;width:100%;">
+    <div class="hero__content reveal">
+      <div class="hero__eyebrow">
+        <div class="hero__line"></div>
+        <span class="hero__eyebrow-text">Pakistan's First Innovation Ecosystem</span>
+      </div>
+      <h1 class="hero__title">
+        Building the<br>Future <em>Founders</em><br>of Pakistan.
+      </h1>
+      <p class="hero__subtitle">
+        Mindverse360° transforms technical talent into entrepreneurs, leaders, and builders through structured pathways, venture creation, and market-ready innovation.
+      </p>
+      <div class="hero__actions">
+        <button class="btn btn-primary" onclick="showPage('apply')">Apply Now →</button>
+        <button class="btn btn-outline" onclick="showPage('ecosystem')">Explore Ecosystem</button>
+        <button class="btn btn-ghost" onclick="showPage('press')">Read Press Release</button>
+      </div>
+    </div>
+    <div class="hero__stats">
+      <div class="hero__stat reveal reveal-delay-1">
+        <span class="hero__stat-num">500+</span>
+        <div class="hero__stat-label">Founders Trained</div>
+      </div>
+      <div class="hero__stat reveal reveal-delay-2">
+        <span class="hero__stat-num">80+</span>
+        <div class="hero__stat-label">Startups Launched</div>
+      </div>
+      <div class="hero__stat reveal reveal-delay-3">
+        <span class="hero__stat-num">40+</span>
+        <div class="hero__stat-label">Industry Partners</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero__scroll">
+    <span>Scroll</span>
+    <div class="hero__scroll-dot"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-label">Trusted & Partnered With</div>
+  <div class="marquee-track">
+    <div class="marquee-inner" id="marquee1"></div>
+  </div>
+  <div style="height:1rem"></div>
+  <div class="marquee-track">
+    <div class="marquee-inner right" id="marquee2"></div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section problem" id="problem">
+  <div class="problem__accent"></div>
+  <div class="container">
+    <div class="problem__grid">
+      <div class="problem__left reveal">
+        <span class="tag">The Challenge</span>
+        <h2 class="problem__title">Talent Exists.<br>Structure is <span style="color:var(--orange)">Missing.</span></h2>
+        <p class="problem__text">
+          Pakistan produces thousands of skilled engineers, designers, and innovators every year. Yet the ecosystem lacks a structured pathway to transform that raw talent into confident founders and market-ready ventures.
+        </p>
+        <div class="problem__items">
+          <div class="problem__item">
+            <span class="problem__item-num">01</span>
+            <p class="problem__item-text">No structured bridge between university and entrepreneurship for technical graduates</p>
+          </div>
+          <div class="problem__item">
+            <span class="problem__item-num">02</span>
+            <p class="problem__item-text">Lack of mentorship, capital access, and execution frameworks for early-stage founders</p>
+          </div>
+          <div class="problem__item">
+            <span class="problem__item-num">03</span>
+            <p class="problem__item-text">Innovation remains trapped in academia and never reaches the market</p>
+          </div>
+        </div>
+      </div>
+      <div class="problem__right reveal reveal-delay-2">
+        <div class="stat-card">
+          <div class="stat-card__num">92%</div>
+          <p class="stat-card__desc">of Pakistani tech graduates have never attempted building a product or venture</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num">3.5M+</div>
+          <p class="stat-card__desc">youth enter the workforce annually — with untapped entrepreneurial potential</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num">$0</div>
+          <p class="stat-card__desc">structured national infrastructure previously existed to bridge talent and venture creation</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM MAP -->
+<section class="section ecosystem" id="ecosystem-section">
+  <div class="container">
+    <div class="ecosystem__header reveal">
+      <span class="tag">How It Works</span>
+      <h2 class="ecosystem__title">The <span style="color:var(--orange)">Mindverse360°</span> Pathway</h2>
+      <p>A structured journey from student to founder — through learning, leadership, and venture creation.</p>
+    </div>
+    <div class="ecosystem__map reveal">
+      <div class="eco-node">
+        <div class="eco-circle active">🎓</div>
+        <span class="eco-label">Student &<br>Graduate</span>
+      </div>
+      <div class="eco-arrow"></div>
+      <div class="eco-node">
+        <div class="eco-circle">📚</div>
+        <span class="eco-label">Structured<br>Learning</span>
+      </div>
+      <div class="eco-arrow"></div>
+      <div class="eco-node">
+        <div class="eco-circle">🚀</div>
+        <span class="eco-label">Innovation<br>Lab</span>
+      </div>
+      <div class="eco-arrow"></div>
+      <div class="eco-node">
+        <div class="eco-circle">💡</div>
+        <span class="eco-label">Product<br>Building</span>
+      </div>
+      <div class="eco-arrow"></div>
+      <div class="eco-node">
+        <div class="eco-circle">🏗️</div>
+        <span class="eco-label">Venture<br>Studio</span>
+      </div>
+      <div class="eco-arrow"></div>
+      <div class="eco-node">
+        <div class="eco-circle">👑</div>
+        <span class="eco-label">Founder &<br>Leader</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="section programs">
+  <div class="container">
+    <div class="programs__header reveal">
+      <h2 class="programs__title">Our <span style="color:var(--orange)">Core</span><br>Programs</h2>
+      <button class="btn btn-outline" onclick="showPage('programs')">View All Programs</button>
+    </div>
+    <div class="programs__grid">
+      <div class="program-card reveal" onclick="showPage('programs')">
+        <div class="program-card__icon">🚀</div>
+        <div class="program-card__cat">Entrepreneurship</div>
+        <div class="program-card__title">Founder Accelerator</div>
+        <p class="program-card__desc">A 12-week intensive program transforming ideas into market-ready businesses. From validation to pitch.</p>
+        <div class="program-card__link">Learn More →</div>
+      </div>
+      <div class="program-card reveal reveal-delay-1" onclick="showPage('programs')">
+        <div class="program-card__icon">🧠</div>
+        <div class="program-card__cat">Leadership</div>
+        <div class="program-card__title">Executive Leadership Track</div>
+        <p class="program-card__desc">Develop the mindset, skills, and network of a world-class leader. Built for ambitious achievers.</p>
+        <div class="program-card__link">Learn More →</div>
+      </div>
+      <div class="program-card reveal reveal-delay-2" onclick="showPage('programs')">
+        <div class="program-card__icon">💻</div>
+        <div class="program-card__cat">Innovation</div>
+        <div class="program-card__title">Product Lab</div>
+        <p class="program-card__desc">Build real, market-ready digital products under mentorship from serial entrepreneurs and engineers.</p>
+        <div class="program-card__link">Learn More →</div>
+      </div>
+      <div class="program-card reveal reveal-delay-1" onclick="showPage('programs')">
+        <div class="program-card__icon">🌐</div>
+        <div class="program-card__cat">Startup Support</div>
+        <div class="program-card__title">Startup Studio</div>
+        <p class="program-card__desc">Co-build ventures with expert operators. We provide funding access, team building, and go-to-market strategy.</p>
+        <div class="program-card__link">Learn More →</div>
+      </div>
+      <div class="program-card reveal reveal-delay-2" onclick="showPage('programs')">
+        <div class="program-card__icon">🤝</div>
+        <div class="program-card__cat">Community</div>
+        <div class="program-card__title">Founder Network</div>
+        <p class="program-card__desc">Join Pakistan's most active community of founders, investors, and innovation leaders. Events. Mentors. Capital.</p>
+        <div class="program-card__link">Learn More →</div>
+      </div>
+      <div class="program-card reveal reveal-delay-3" onclick="showPage('programs')">
+        <div class="program-card__icon">📊</div>
+        <div class="program-card__cat">Partnerships</div>
+        <div class="program-card__title">Corporate Innovation</div>
+        <p class="program-card__desc">Partnering with enterprises to build internal innovation capabilities and spin out new ventures.</p>
+        <div class="program-card__link">Learn More →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="section metrics">
+  <div class="container">
+    <span class="tag reveal">Our Impact</span>
+    <h2 class="metrics__title reveal">Numbers That<br><span style="color:var(--orange)">Tell the Story</span></h2>
+    <div class="metrics__grid">
+      <div class="metric-box reveal">
+        <span class="metric-num" data-target="500">0</span>
+        <span class="metric-label">Founders Trained</span>
+      </div>
+      <div class="metric-box reveal reveal-delay-1">
+        <span class="metric-num" data-target="80">0</span>
+        <span class="metric-label">Startups Launched</span>
+      </div>
+      <div class="metric-box reveal reveal-delay-2">
+        <span class="metric-num" data-target="40">0</span>
+        <span class="metric-label">Industry Partners</span>
+      </div>
+      <div class="metric-box reveal reveal-delay-3">
+        <span class="metric-num" data-target="12">0</span>
+        <span class="metric-label">Cities Reached</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<section class="section founders">
+  <div class="container">
+    <div class="founders__header reveal">
+      <span class="tag">Leadership</span>
+      <h2 class="founders__title">The <span style="color:var(--orange)">Minds</span> Behind<br>the Mission</h2>
+      <p style="max-width:500px;margin:0 auto">Seasoned entrepreneurs, operators, and visionaries dedicated to Pakistan's founder ecosystem.</p>
+    </div>
+    <div class="founders__grid">
+      <div class="founder-card reveal">
+        <div class="founder-card__img">👨‍💼</div>
+        <div class="founder-card__body">
+          <div class="founder-card__name">Ahmed Raza</div>
+          <div class="founder-card__role">Co-Founder & CEO</div>
+          <p class="founder-card__bio">Serial entrepreneur with 3 successful exits. Former tech lead at major regional VC firms. Passionate about building systemic change in Pakistan's innovation landscape.</p>
+          <div class="founder-card__socials">
+            <div class="social-btn">in</div>
+            <div class="social-btn">𝕏</div>
+          </div>
+        </div>
+      </div>
+      <div class="founder-card reveal reveal-delay-1">
+        <div class="founder-card__img">👩‍💼</div>
+        <div class="founder-card__body">
+          <div class="founder-card__name">Sana Malik</div>
+          <div class="founder-card__role">Co-Founder & CIO</div>
+          <p class="founder-card__bio">Former McKinsey consultant. Built Pakistan's largest women-led tech community. Championing inclusive innovation and structured pathways to entrepreneurship.</p>
+          <div class="founder-card__socials">
+            <div class="social-btn">in</div>
+            <div class="social-btn">𝕏</div>
+          </div>
+        </div>
+      </div>
+      <div class="founder-card reveal reveal-delay-2">
+        <div class="founder-card__img">👨‍🔬</div>
+        <div class="founder-card__body">
+          <div class="founder-card__name">Usman Tariq</div>
+          <div class="founder-card__role">Head of Ventures</div>
+          <p class="founder-card__bio">Angel investor with a portfolio spanning 20+ startups. Previously VP Engineering at a SaaS unicorn. Dedicated to turning builders into business leaders.</p>
+          <div class="founder-card__socials">
+            <div class="social-btn">in</div>
+            <div class="social-btn">𝕏</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:3rem">
+      <button class="btn btn-outline" onclick="showPage('team')">Meet the Full Team →</button>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials">
+  <div class="container">
+    <div class="testimonials__header reveal">
+      <span class="tag">Success Stories</span>
+      <h2 class="testimonials__title">What Our <span style="color:var(--orange)">Founders</span> Say</h2>
+    </div>
+    <div class="testimonials__track reveal">
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Mindverse360° gave me the structure I was missing. Within 6 months of completing the Founder Accelerator, my startup raised its first seed round. This ecosystem is transformational.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">🧑</div>
+          <div>
+            <div class="testimonial-name">Bilal Chaudhry</div>
+            <div class="testimonial-role">Founder, PayQuick — Batch 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">I came in as an engineer with no business knowledge. I left as a CEO. The leadership track completely rewired how I think about scale, teams, and strategy. Absolutely world-class.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">👩</div>
+          <div>
+            <div class="testimonial-name">Areeba Farooq</div>
+            <div class="testimonial-role">CEO, HealthStack — Leadership Track 2023</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">The Product Lab wasn't just about building software. It taught us product thinking, user research, and iteration. We shipped a real product to 10,000 users before we even graduated.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">👦</div>
+          <div>
+            <div class="testimonial-name">Hamza Iqbal</div>
+            <div class="testimonial-role">CTO, LogiX — Product Lab 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="section events">
+  <div class="container">
+    <div class="events__header reveal">
+      <div>
+        <span class="tag">What's On</span>
+        <h2 class="events__title">Upcoming <span style="color:var(--orange)">Events</span></h2>
+      </div>
+      <button class="btn btn-outline" onclick="showPage('events')">All Events</button>
+    </div>
+    <div class="events__grid reveal">
+      <div class="event-featured" onclick="showPage('events')">
+        <div class="event-img">
+          🎤
+          <span class="event-badge">Featured</span>
+        </div>
+        <div class="event-featured__body">
+          <div class="event-featured__date">📅 May 15, 2025 · Lahore, Pakistan</div>
+          <div class="event-featured__title">Mindverse Summit 2025 — Pakistan's Innovation Conference</div>
+          <p class="event-featured__desc">A full-day gathering of Pakistan's top founders, investors, and ecosystem leaders. Keynotes, panels, pitches, and networking with 1,000+ attendees.</p>
+          <br>
+          <button class="btn btn-primary" style="margin-top:1rem" onclick="showPage('events')">Register Now →</button>
+        </div>
+      </div>
+      <div class="events__list">
+        <div class="event-item" onclick="showPage('events')">
+          <div class="event-date-box">
+            <span class="event-day">12</span>
+            <span class="event-month">APR</span>
+          </div>
+          <div class="event-info">
+            <div class="event-item-title">Founder Bootcamp — Karachi Edition</div>
+            <div class="event-item-type">Workshop · 2 Days · In-Person</div>
+          </div>
+        </div>
+        <div class="event-item" onclick="showPage('events')">
+          <div class="event-date-box">
+            <span class="event-day">20</span>
+            <span class="event-month">APR</span>
+          </div>
+          <div class="event-info">
+            <div class="event-item-title">AI & Innovation Masterclass</div>
+            <div class="event-item-type">Online · 3 Hours · Free</div>
+          </div>
+        </div>
+        <div class="event-item" onclick="showPage('events')">
+          <div class="event-date-box">
+            <span class="event-day">28</span>
+            <span class="event-month">APR</span>
+          </div>
+          <div class="event-info">
+            <div class="event-item-title">Investor Demo Day — Spring 2025</div>
+            <div class="event-item-type">Pitch Event · Islamabad · Invite Only</div>
+          </div>
+        </div>
+        <div class="event-item" onclick="showPage('events')">
+          <div class="event-date-box">
+            <span class="event-day">05</span>
+            <span class="event-month">MAY</span>
+          </div>
+          <div class="event-info">
+            <div class="event-item-title">Leadership Retreat — Lahore</div>
+            <div class="event-item-type">Residential · 3 Days · Limited Seats</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VENTURE SECTION -->
+<section class="section venture">
+  <div class="venture__glow"></div>
+  <div class="container">
+    <div class="venture__inner">
+      <div class="reveal">
+        <span class="tag">Venture Building</span>
+        <h2 class="venture__title">We Don't Just<br>Teach — We <span style="color:var(--orange)">Build</span></h2>
+        <p class="venture__text">Mindverse360° operates an in-house venture studio where the best founders co-build companies with our team. We provide resources, team, and strategy.</p>
+        <div class="venture__steps">
+          <div class="venture__step">
+            <div class="venture__step-num">01</div>
+            <div>
+              <div class="venture__step-title">Idea Validation</div>
+              <p class="venture__step-desc">Customer discovery, market sizing, and problem validation in 4 weeks.</p>
+            </div>
+          </div>
+          <div class="venture__step">
+            <div class="venture__step-num">02</div>
+            <div>
+              <div class="venture__step-title">MVP Development</div>
+              <p class="venture__step-desc">Build a market-ready prototype with our in-house engineering and design team.</p>
+            </div>
+          </div>
+          <div class="venture__step">
+            <div class="venture__step-num">03</div>
+            <div>
+              <div class="venture__step-title">Go-To-Market</div>
+              <p class="venture__step-desc">Launch strategy, first customer acquisition, and early revenue generation.</p>
+            </div>
+          </div>
+          <div class="venture__step">
+            <div class="venture__step-num">04</div>
+            <div>
+              <div class="venture__step-title">Fundraising & Scale</div>
+              <p class="venture__step-desc">Investor introductions, pitch preparation, and scaling playbooks.</p>
+            </div>
+          </div>
+        </div>
+        <br>
+        <button class="btn btn-primary" onclick="showPage('venture')" style="margin-top:1.5rem">Explore Venture Studio →</button>
+      </div>
+      <div class="venture__visual reveal reveal-delay-2">
+        <div class="venture__orbit">
+          <div class="orbit-ring">
+            <div class="orbit-dot"></div>
+          </div>
+          <div class="orbit-ring">
+            <div class="orbit-dot" style="background:#fff;top:auto;bottom:-5px"></div>
+          </div>
+          <div class="orbit-center">🚀</div>
+        </div>
+        <div style="text-align:center;padding-top:1rem">
+          <div style="font-family:var(--font-display);font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:0.15em;text-transform:uppercase">Active Portfolio</div>
+          <div style="font-family:var(--font-display);font-size:2.5rem;font-weight:800;color:var(--orange);margin-top:0.5rem">28 Ventures</div>
+          <div style="color:rgba(255,255,255,0.5);font-size:0.875rem">Currently in the studio pipeline</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section--sm newsletter">
+  <div class="container">
+    <div class="newsletter__inner">
+      <div class="reveal">
+        <h2 class="newsletter__title">Stay Ahead of<br><span style="color:var(--orange)">Pakistan's Ecosystem</span></h2>
+        <p class="newsletter__text">Weekly insights, opportunities, and ecosystem news for founders, innovators, and leaders.</p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="newsletter__form">
+          <input class="newsletter__input" type="email" placeholder="Enter your email address...">
+          <button class="btn btn-primary">Subscribe →</button>
+        </div>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:0.75rem">No spam. Unsubscribe anytime. Read by 5,000+ founders weekly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="container">
+    <span class="tag reveal">Ready?</span>
+    <h2 class="cta-section__title reveal">Your Founder<br>Journey <span style="color:var(--orange)">Starts Here.</span></h2>
+    <p class="cta-section__subtitle reveal">Join Pakistan's most ambitious cohort of founders, innovators, and leaders. Applications for 2025 are now open.</p>
+    <div class="cta-section__actions reveal">
+      <button class="btn btn-primary" onclick="showPage('apply')">Apply Now →</button>
+      <button class="btn btn-outline" onclick="showPage('partner')">Partner With Us</button>
+      <button class="btn btn-ghost" onclick="showPage('contact')">Contact Us</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">Mindverse<span>360°</span></div>
+        <p class="footer__brand-desc">Pakistan's first integrated Entrepreneurial, Leadership, and Innovation Ecosystem. Building the future founders of Pakistan — one structured pathway at a time.</p>
+        <div class="footer__socials">
+          <div class="social-btn">in</div>
+          <div class="social-btn">𝕏</div>
+          <div class="social-btn">f</div>
+          <div class="social-btn">▶</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Ecosystem</div>
+        <ul class="footer__links">
+          <li><a href="#" onclick="showPage('programs')">Programs</a></li>
+          <li><a href="#" onclick="showPage('venture')">Venture Studio</a></li>
+          <li><a href="#" onclick="showPage('leadership')">Leadership</a></li>
+          <li><a href="#" onclick="showPage('innovation')">Innovation Lab</a></li>
+          <li><a href="#" onclick="showPage('startup')">Startup Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Company</div>
+        <ul class="footer__links">
+          <li><a href="#" onclick="showPage('about')">About Us</a></li>
+          <li><a href="#" onclick="showPage('team')">Team</a></li>
+          <li><a href="#" onclick="showPage('press')">Newsroom</a></li>
+          <li><a href="#" onclick="showPage('blog')">Blog</a></li>
+          <li><a href="#" onclick="showPage('careers')">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Get In Touch</div>
+        <ul class="footer__links">
+          <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+          <li><a href="#" onclick="showPage('partner')">Partner With Us</a></li>
+          <li><a href="#" onclick="showPage('apply')">Apply Now</a></li>
+          <li><a href="#" onclick="showPage('faq')">FAQ</a></li>
+          <li><a href="mailto:hello@mindverse360.pk">hello@mindverse360.pk</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__copy">© 2025 Mindverse360°. All rights reserved. Lahore, Pakistan.</div>
+      <div class="footer__bottom-links">
+        <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
+        <a href="#" onclick="showPage('terms')">Terms & Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+
+<!-- ═══════════ INNER PAGES (MODALS) ═══════════ -->
+
+<!-- ABOUT PAGE -->
+<div class="page-modal" id="about-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">About Mindverse360°</div>
+    <button class="btn btn-primary" onclick="showPage('apply')">Apply Now</button>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">Our Story</span>
+      <h1 class="page-hero__title">Pakistan's <span style="color:var(--orange)">First</span> Integrated<br>Innovation Ecosystem</h1>
+      <p class="page-hero__desc">Born from a belief that Pakistan's greatest asset is its people — and that they deserve a world-class ecosystem to unlock their full potential.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <div class="content-grid-2">
+        <div>
+          <span class="tag">Our Mission</span>
+          <h2 style="font-size:2rem;margin-bottom:1rem">Transforming Technical<br>Talent into <span style="color:var(--orange)">Founders</span></h2>
+          <p style="margin-bottom:1rem">Mindverse360° was founded on a simple but powerful insight: Pakistan produces exceptional technical talent, but lacks the structured pathways to transform that talent into entrepreneurs and business leaders.</p>
+          <p>We bridge that gap — through programs, venture building, leadership development, and a thriving community of founders, mentors, and industry partners.</p>
+        </div>
+        <div>
+          <span class="tag">Our Vision</span>
+          <h2 style="font-size:2rem;margin-bottom:1rem">A Nation of <span style="color:var(--orange)">Builders</span><br>and Owners</h2>
+          <p style="margin-bottom:1rem">We envision a Pakistan where the next generation doesn't just work for companies — they build them. Where innovation is systematic, not accidental.</p>
+          <p>Where every ambitious young Pakistani has access to the tools, mentorship, and community to turn their ideas into reality.</p>
+        </div>
+      </div>
+    </div>
+    <div class="content-section">
+      <span class="tag">Why We Exist</span>
+      <h2 style="font-size:2rem;margin-bottom:2rem">The <span style="color:var(--orange)">Gap</span> We're Closing</h2>
+      <div class="content-grid-3">
+        <div class="program-card">
+          <div class="program-card__icon">🎓</div>
+          <div class="program-card__title">Structured Education</div>
+          <p class="program-card__desc">Bridging the gap between academic knowledge and real-world entrepreneurial execution.</p>
+        </div>
+        <div class="program-card">
+          <div class="program-card__icon">🤝</div>
+          <div class="program-card__title">Mentor Access</div>
+          <p class="program-card__desc">Connecting founders with seasoned operators, investors, and industry leaders.</p>
+        </div>
+        <div class="program-card">
+          <div class="program-card__icon">💰</div>
+          <div class="program-card__title">Capital Pathways</div>
+          <p class="program-card__desc">Creating clear routes to seed funding, angel investment, and venture capital.</p>
+        </div>
+      </div>
+    </div>
+    <div class="content-section" style="text-align:center">
+      <h2 style="font-size:2.5rem;margin-bottom:1rem">Our <span style="color:var(--orange)">Values</span></h2>
+      <div class="metrics__grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2rem">
+        <div class="metric-box"><span style="font-size:2rem;display:block;margin-bottom:0.5rem">⚡</span><strong style="font-family:var(--font-display);font-size:0.95rem">Execution First</strong></div>
+        <div class="metric-box"><span style="font-size:2rem;display:block;margin-bottom:0.5rem">🧠</span><strong style="font-family:var(--font-display);font-size:0.95rem">Think Bold</strong></div>
+        <div class="metric-box"><span style="font-size:2rem;display:block;margin-bottom:0.5rem">🤲</span><strong style="font-family:var(--font-display);font-size:0.95rem">Give Back</strong></div>
+        <div class="metric-box"><span style="font-size:2rem;display:block;margin-bottom:0.5rem">🌍</span><strong style="font-family:var(--font-display);font-size:0.95rem">Nation Building</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRAMS PAGE -->
+<div class="page-modal" id="programs-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Programs</div>
+    <button class="btn btn-primary" onclick="showPage('apply')">Apply Now</button>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">All Programs</span>
+      <h1 class="page-hero__title">Structured Pathways to <span style="color:var(--orange)">Ownership</span></h1>
+      <p class="page-hero__desc">From beginner to founder — each program is designed with real-world outcomes, not just certificates.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <div class="programs__grid">
+        <div class="program-card">
+          <div class="program-card__icon">🚀</div>
+          <div class="program-card__cat">12 Weeks · In-Person · Lahore & Karachi</div>
+          <div class="program-card__title">Founder Accelerator</div>
+          <p class="program-card__desc">The flagship program. Transform your idea into a validated, fundable startup. Business model, GTM, pitch deck, and investor meetings included.</p>
+          <div class="program-card__link">Apply Now →</div>
+        </div>
+        <div class="program-card">
+          <div class="program-card__icon">🧠</div>
+          <div class="program-card__cat">8 Weeks · Hybrid · Nationwide</div>
+          <div class="program-card__title">Executive Leadership Track</div>
+          <p class="program-card__desc">For rising leaders. Master strategic thinking, organizational design, communication, and personal brand. Includes a residential retreat.</p>
+          <div class="program-card__link">Apply Now →</div>
+        </div>
+        <div class="program-card">
+          <div class="program-card__icon">💻</div>
+          <div class="program-card__cat">10 Weeks · In-Person · Lahore</div>
+          <div class="program-card__title">Product Lab</div>
+          <p class="program-card__desc">Build a real product. Teams of 3-5 work with engineers and designers to ship a market-ready digital product to real users.</p>
+          <div class="program-card__link">Apply Now →</div>
+        </div>
+        <div class="program-card">
+          <div class="program-card__icon">🌐</div>
+          <div class="program-card__cat">Ongoing · Selective · In-Person</div>
+          <div class="program-card__title">Startup Studio</div>
+          <p class="program-card__desc">Co-build your venture with our team. We provide co-founder matching, engineering, design, and go-to-market support for equity.</p>
+          <div class="program-card__link">Apply Now →</div>
+        </div>
+        <div class="program-card">
+          <div class="program-card__icon">🤝</div>
+          <div class="program-card__cat">Ongoing · Community · Free</div>
+          <div class="program-card__title">Founder Network</div>
+          <p class="program-card__desc">Monthly events, peer circles, investor mixers, and an active Slack community. Your tribe of builders and dreamers.</p>
+          <div class="program-card__link">Join Now →</div>
+        </div>
+        <div class="program-card">
+          <div class="program-card__icon">🎓</div>
+          <div class="program-card__cat">6 Weeks · Online · Self-paced</div>
+          <div class="program-card__title">Startup Fundamentals</div>
+          <p class="program-card__desc">The beginner's entry point. Learn validation, lean methodology, business models, and pitching in 6 structured weeks online.</p>
+          <div class="program-card__link">Enroll Free →</div>
+        </div>
+      </div>
+    </div>
+    <div class="content-section" style="text-align:center">
+      <h2 style="font-size:2rem;margin-bottom:1rem">Not sure which program?</h2>
+      <p style="color:rgba(255,255,255,0.55);margin-bottom:2rem">Book a free 30-minute discovery call with our team. We'll map the right path for your goals.</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Book Discovery Call →</button>
+    </div>
+  </div>
+</div>
+
+<!-- APPLY PAGE -->
+<div class="page-modal" id="apply-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Apply / Join</div>
+    <div></div>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">Applications Open</span>
+      <h1 class="page-hero__title">Begin Your<br><span style="color:var(--orange)">Founder Journey</span></h1>
+      <p class="page-hero__desc">Applications for our 2025 cohorts are now open. Seats are limited and selective. Apply now to secure your spot.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <div class="content-grid-2">
+        <div>
+          <h2 style="font-size:1.8rem;margin-bottom:1.5rem">Application Form</h2>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input class="form-input" type="text" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input class="form-input" type="tel" placeholder="+92 300 0000000">
+          </div>
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <select class="form-select">
+              <option value="">Select your city</option>
+              <option>Lahore</option>
+              <option>Karachi</option>
+              <option>Islamabad</option>
+              <option>Peshawar</option>
+              <option>Quetta</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Program of Interest</label>
+            <select class="form-select">
+              <option value="">Select a program</option>
+              <option>Founder Accelerator</option>
+              <option>Executive Leadership Track</option>
+              <option>Product Lab</option>
+              <option>Startup Studio</option>
+              <option>Startup Fundamentals</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tell Us About Your Idea or Goal</label>
+            <textarea class="form-textarea" placeholder="What are you building? What problem are you solving? What do you hope to achieve?"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">LinkedIn Profile URL</label>
+            <input class="form-input" type="url" placeholder="https://linkedin.com/in/...">
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem">Submit Application →</button>
+        </div>
+        <div>
+          <div class="program-card" style="margin-bottom:1.5rem">
+            <div class="program-card__icon">⚡</div>
+            <div class="program-card__title">Why Apply?</div>
+            <p class="program-card__desc" style="margin-bottom:0">Access to world-class mentors, co-working space, seed funding connections, and a lifetime alumni network of Pakistan's top founders.</p>
+          </div>
+          <div class="program-card" style="margin-bottom:1.5rem">
+            <div class="program-card__icon">📋</div>
+            <div class="program-card__title">What We Look For</div>
+            <p class="program-card__desc" style="margin-bottom:0">Ambition, execution mindset, coachability, and a genuine desire to build something meaningful for Pakistan and beyond.</p>
+          </div>
+          <div class="program-card">
+            <div class="program-card__icon">📅</div>
+            <div class="program-card__title">Timeline</div>
+            <p class="program-card__desc" style="margin-bottom:0">Applications close April 30, 2025. Interviews in May. Cohort starts June 1, 2025.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="page-modal" id="contact-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Contact Us</div>
+    <div></div>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">Get In Touch</span>
+      <h1 class="page-hero__title">We'd Love to<br><span style="color:var(--orange)">Hear From You</span></h1>
+      <p class="page-hero__desc">Whether you're a founder, partner, investor, or just curious — our team is here to help.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <div class="content-grid-2">
+        <div>
+          <h2 style="font-size:1.8rem;margin-bottom:1.5rem">Send a Message</h2>
+          <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" type="text" placeholder="Your name"></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="your@email.com"></div>
+          <div class="form-group"><label class="form-label">Subject</label><select class="form-select"><option>General Inquiry</option><option>Partnership</option><option>Media / Press</option><option>Program Info</option><option>Investment</option></select></div>
+          <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="How can we help?"></textarea></div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center">Send Message →</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1.5rem">
+          <div class="program-card">
+            <div class="program-card__icon">📍</div>
+            <div class="program-card__title">Our Office</div>
+            <p class="program-card__desc">DHA Phase 6, Lahore, Punjab, Pakistan<br>Mon–Fri: 9am–6pm PKT</p>
+          </div>
+          <div class="program-card">
+            <div class="program-card__icon">📧</div>
+            <div class="program-card__title">Email Us</div>
+            <p class="program-card__desc">hello@mindverse360.pk<br>partnerships@mindverse360.pk<br>media@mindverse360.pk</p>
+          </div>
+          <div class="program-card">
+            <div class="program-card__icon">📞</div>
+            <div class="program-card__title">Call Us</div>
+            <p class="program-card__desc">+92 42 1234 5678<br>WhatsApp: +92 300 1234567</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM PAGE -->
+<div class="page-modal" id="team-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Our Team</div>
+    <button class="btn btn-primary" onclick="showPage('apply')">Apply Now</button>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">The Team</span>
+      <h1 class="page-hero__title">Built by <span style="color:var(--orange)">Operators</span>,<br>For Founders</h1>
+      <p class="page-hero__desc">Every member of our team has built something. We know what it takes — and we're here to help you get there.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <h2 style="margin-bottom:2rem;font-size:1.5rem">Leadership <span style="color:var(--orange)">Team</span></h2>
+      <div class="founders__grid">
+        <div class="founder-card"><div class="founder-card__img">👨‍💼</div><div class="founder-card__body"><div class="founder-card__name">Ahmed Raza</div><div class="founder-card__role">Co-Founder & CEO</div><p class="founder-card__bio">Serial entrepreneur. 3 exits. Former VC advisor and tech lead. Passionate about building Pakistan's founder ecosystem at scale.</p></div></div>
+        <div class="founder-card"><div class="founder-card__img">👩‍💼</div><div class="founder-card__body"><div class="founder-card__name">Sana Malik</div><div class="founder-card__role">Co-Founder & CIO</div><p class="founder-card__bio">McKinsey alum. Built Pakistan's largest women-in-tech community. Champion of inclusive, structured innovation pathways.</p></div></div>
+        <div class="founder-card"><div class="founder-card__img">👨‍🔬</div><div class="founder-card__body"><div class="founder-card__name">Usman Tariq</div><div class="founder-card__role">Head of Ventures</div><p class="founder-card__bio">Angel investor, 20+ portfolio companies. Former VP Engineering at a SaaS unicorn. Specialist in venture building and product strategy.</p></div></div>
+        <div class="founder-card"><div class="founder-card__img">👩‍🏫</div><div class="founder-card__body"><div class="founder-card__name">Nadia Khan</div><div class="founder-card__role">Head of Programs</div><p class="founder-card__bio">Education innovator with 12+ years designing entrepreneurship curricula. Previously at IBA and LUMS. Masters from INSEAD.</p></div></div>
+        <div class="founder-card"><div class="founder-card__img">👨‍🎨</div><div class="founder-card__body"><div class="founder-card__name">Zain Hassan</div><div class="founder-card__role">Head of Product</div><p class="founder-card__bio">Product designer and engineer. Led product at 2 acquired startups. Mentor to 100+ founders. Obsessed with building user-centric products.</p></div></div>
+        <div class="founder-card"><div class="founder-card__img">👩‍💻</div><div class="founder-card__body"><div class="founder-card__name">Amna Sheikh</div><div class="founder-card__role">Head of Partnerships</div><p class="founder-card__bio">Former corporate strategy lead at a Fortune 500. Built 30+ strategic partnerships across South Asia. Drives Mindverse360°'s ecosystem growth.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EVENTS PAGE -->
+<div class="page-modal" id="events-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Events</div>
+    <button class="btn btn-primary" onclick="showPage('apply')">Apply Now</button>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">Events & Gatherings</span>
+      <h1 class="page-hero__title">Where <span style="color:var(--orange)">Ideas</span> Meet<br>Opportunity</h1>
+      <p class="page-hero__desc">From intimate founder dinners to national summits — every Mindverse360° event is a catalyst for connection, learning, and action.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <h2 style="margin-bottom:2rem;font-size:1.8rem">Upcoming <span style="color:var(--orange)">Events</span></h2>
+      <div style="display:flex;flex-direction:column;gap:1.5rem">
+        <div class="program-card" style="display:grid;grid-template-columns:auto 1fr auto;gap:2rem;align-items:center">
+          <div class="event-date-box" style="min-width:70px;height:70px"><span class="event-day">12</span><span class="event-month">APR</span></div>
+          <div><div class="program-card__cat">Workshop · Karachi · 2 Days</div><div class="program-card__title">Founder Bootcamp — Karachi Edition</div><p class="program-card__desc" style="margin:0">An intensive 2-day bootcamp on customer discovery, validation, and pitch preparation. Limited to 30 participants.</p></div>
+          <button class="btn btn-primary" style="white-space:nowrap">Register →</button>
+        </div>
+        <div class="program-card" style="display:grid;grid-template-columns:auto 1fr auto;gap:2rem;align-items:center">
+          <div class="event-date-box" style="min-width:70px;height:70px"><span class="event-day">20</span><span class="event-month">APR</span></div>
+          <div><div class="program-card__cat">Online · Free · 3 Hours</div><div class="program-card__title">AI & Innovation Masterclass</div><p class="program-card__desc" style="margin:0">How to leverage AI in your startup and product. Live session with Q&A. Open to all — completely free.</p></div>
+          <button class="btn btn-outline" style="white-space:nowrap">Register Free →</button>
+        </div>
+        <div class="program-card" style="display:grid;grid-template-columns:auto 1fr auto;gap:2rem;align-items:center">
+          <div class="event-date-box" style="min-width:70px;height:70px"><span class="event-day">15</span><span class="event-month">MAY</span></div>
+          <div><div class="program-card__cat">Conference · Lahore · 1 Day · 1,000+ Attendees</div><div class="program-card__title">Mindverse Summit 2025</div><p class="program-card__desc" style="margin:0">Pakistan's premier innovation conference. Keynotes, panels, startup pitches, investor meetings, and a grand networking gala.</p></div>
+          <button class="btn btn-primary" style="white-space:nowrap">Get Tickets →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ PAGE -->
+<div class="page-modal" id="faq-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">FAQ</div>
+    <button class="btn btn-primary" onclick="showPage('apply')">Apply Now</button>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">FAQ</span>
+      <h1 class="page-hero__title">Frequently Asked<br><span style="color:var(--orange)">Questions</span></h1>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section" style="max-width:750px;margin:0 auto">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Who can apply to Mindverse360° programs? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Our programs are open to university students, recent graduates, early-stage founders, and professionals looking to transition into entrepreneurship. We welcome applicants from all backgrounds — technical or non-technical. What matters most is ambition, coachability, and a genuine desire to build.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">How much do the programs cost? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Program fees vary. The Startup Fundamentals online course is free. The Founder Accelerator and Leadership Track have tuition fees, but we offer scholarships, income share agreements, and corporate-sponsored seats. We believe cost should never be a barrier to the right candidates.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Do I need a business idea to apply? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Not necessarily. For most programs, you just need the desire to build something. The Founder Accelerator helps you develop and validate your idea from scratch. However, the Startup Studio requires at least an early-stage concept or MVP.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Are programs available outside of Lahore? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Yes! We run programs in Lahore, Karachi, and Islamabad. Several of our programs are also available online or in a hybrid format for participants across Pakistan. We plan to expand to Peshawar and Quetta in 2025.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Does Mindverse360° take equity in my startup? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">Only in the Startup Studio model, where we co-build ventures and take equity in exchange for significant resources, team support, and capital. All other programs — including the Founder Accelerator — do not take any equity. Your startup belongs to you.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">How competitive is the application process? <span class="faq-icon">+</span></div>
+        <div class="faq-answer">It's selective but accessible. We typically accept 20–30 participants per cohort and receive 3–5x more applications. We review holistically — not just academic background, but your potential, mindset, and fit with our cohort culture.</div>
+      </div>
+    </div>
+    <div class="content-section" style="text-align:center">
+      <p style="margin-bottom:1.5rem">Still have questions?</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Contact Our Team →</button>
+    </div>
+  </div>
+</div>
+
+<!-- VENTURE PAGE -->
+<div class="page-modal" id="venture-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Venture Studio</div>
+    <button class="btn btn-primary" onclick="showPage('apply')">Apply Now</button>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">Venture Building</span>
+      <h1 class="page-hero__title">We <span style="color:var(--orange)">Build</span> With<br>the Best Founders</h1>
+      <p class="page-hero__desc">The Mindverse360° Venture Studio is where the ecosystem's top talent co-creates companies with our operators, engineers, and capital partners.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <div class="content-grid-2">
+        <div>
+          <span class="tag">What We Offer</span>
+          <h2 style="font-size:2rem;margin-bottom:1.5rem">Full-Stack <span style="color:var(--orange)">Venture Support</span></h2>
+          <div class="venture__steps">
+            <div class="venture__step"><div class="venture__step-num">01</div><div><div class="venture__step-title">Idea → Validation</div><p class="venture__step-desc">4-week sprint to validate demand, map the market, and define the MVP.</p></div></div>
+            <div class="venture__step"><div class="venture__step-num">02</div><div><div class="venture__step-title">Build → Ship</div><p class="venture__step-desc">In-house design and engineering team builds your product to launch standard.</p></div></div>
+            <div class="venture__step"><div class="venture__step-num">03</div><div><div class="venture__step-title">Launch → Grow</div><p class="venture__step-desc">GTM strategy, first 100 customers, and revenue generation playbook.</p></div></div>
+            <div class="venture__step"><div class="venture__step-num">04</div><div><div class="venture__step-title">Fund → Scale</div><p class="venture__step-desc">Investor intros, pitch prep, and post-seed growth support.</p></div></div>
+          </div>
+        </div>
+        <div>
+          <span class="tag">Current Portfolio</span>
+          <h2 style="font-size:2rem;margin-bottom:1.5rem">28 <span style="color:var(--orange)">Active Ventures</span></h2>
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div class="event-item"><div class="event-date-box" style="font-size:1.5rem;min-width:56px;height:56px">💊</div><div class="event-info"><div class="event-item-title">HealthStack</div><div class="event-item-type">Digital Health · Seed Stage</div></div></div>
+            <div class="event-item"><div class="event-date-box" style="font-size:1.5rem;min-width:56px;height:56px">🏦</div><div class="event-info"><div class="event-item-title">PayQuick</div><div class="event-item-type">Fintech · Series A</div></div></div>
+            <div class="event-item"><div class="event-date-box" style="font-size:1.5rem;min-width:56px;height:56px">📦</div><div class="event-info"><div class="event-item-title">LogiX</div><div class="event-item-type">Logistics SaaS · Pre-Seed</div></div></div>
+            <div class="event-item"><div class="event-date-box" style="font-size:1.5rem;min-width:56px;height:56px">📚</div><div class="event-info"><div class="event-item-title">EduBridge</div><div class="event-item-type">EdTech · Seed Stage</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PARTNER PAGE -->
+<div class="page-modal" id="partner-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Partnerships</div>
+    <div></div>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">Partnerships</span>
+      <h1 class="page-hero__title">Build Pakistan's Future<br><span style="color:var(--orange)">With Us</span></h1>
+      <p class="page-hero__desc">Join a growing network of corporates, universities, investors, and government bodies powering Pakistan's innovation ecosystem.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <div class="content-grid-3">
+        <div class="program-card"><div class="program-card__icon">🏢</div><div class="program-card__title">Corporate Partners</div><p class="program-card__desc">Sponsor cohorts, access talent pipelines, run internal innovation programs, and build your CSR impact.</p></div>
+        <div class="program-card"><div class="program-card__icon">🏦</div><div class="program-card__title">Investment Partners</div><p class="program-card__desc">Get first-look access to our top graduating startups. Co-invest in our studio ventures. Join our investor network.</p></div>
+        <div class="program-card"><div class="program-card__icon">🎓</div><div class="program-card__title">Academic Partners</div><p class="program-card__desc">Co-design curricula, refer students to programs, and embed entrepreneurship in your institution.</p></div>
+      </div>
+    </div>
+    <div class="content-section">
+      <div class="content-grid-2">
+        <div>
+          <h2 style="font-size:1.8rem;margin-bottom:1.5rem">Partner <span style="color:var(--orange)">Inquiry</span></h2>
+          <div class="form-group"><label class="form-label">Organization Name</label><input class="form-input" type="text" placeholder="Your company name"></div>
+          <div class="form-group"><label class="form-label">Contact Name</label><input class="form-input" type="text" placeholder="Your name"></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="your@company.com"></div>
+          <div class="form-group"><label class="form-label">Partnership Type</label><select class="form-select"><option>Corporate Partnership</option><option>Investment Partnership</option><option>Academic Partnership</option><option>Media Partnership</option><option>Other</option></select></div>
+          <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Tell us about your organization and what you have in mind..."></textarea></div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center">Submit Inquiry →</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1.5rem;padding-top:2.5rem">
+          <div class="metric-box"><span class="metric-num">40+</span><span class="metric-label">Active Partners</span></div>
+          <div class="metric-box"><span class="metric-num">15+</span><span class="metric-label">Corporate Sponsors</span></div>
+          <div class="metric-box"><span class="metric-num">8</span><span class="metric-label">University Partners</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG PAGE -->
+<div class="page-modal" id="blog-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Blog & Insights</div>
+    <button class="btn btn-primary" onclick="showPage('apply')">Apply Now</button>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">Insights</span>
+      <h1 class="page-hero__title">Ideas, Strategy &<br><span style="color:var(--orange)">Ecosystem Intelligence</span></h1>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <div class="programs__grid">
+        <div class="program-card"><div class="program-card__cat">Entrepreneurship · 5 min read</div><div class="program-card__title">Why Pakistan's Startup Ecosystem is at an Inflection Point</div><p class="program-card__desc">The conditions for a founder renaissance are converging. Here's why now is the moment to build.</p><div class="program-card__link">Read More →</div></div>
+        <div class="program-card"><div class="program-card__cat">Leadership · 8 min read</div><div class="program-card__title">The 5 Habits of Pakistan's Most Effective Startup CEOs</div><p class="program-card__desc">After working with 500+ founders, here's what separates the best from the rest.</p><div class="program-card__link">Read More →</div></div>
+        <div class="program-card"><div class="program-card__cat">Product · 6 min read</div><div class="program-card__title">How to Validate Your Startup Idea in 2 Weeks</div><p class="program-card__desc">A practical framework from our Product Lab mentors. No code required at this stage.</p><div class="program-card__link">Read More →</div></div>
+        <div class="program-card"><div class="program-card__cat">Funding · 7 min read</div><div class="program-card__title">Raising Seed Funding in Pakistan: What Investors Actually Want</div><p class="program-card__desc">Direct advice from 10 active Pakistani angel investors on what they look for.</p><div class="program-card__link">Read More →</div></div>
+        <div class="program-card"><div class="program-card__cat">Community · 4 min read</div><div class="program-card__title">Building in Public: How Transparency Accelerates Growth</div><p class="program-card__desc">Lessons from founders who shared their journey openly and won customers doing it.</p><div class="program-card__link">Read More →</div></div>
+        <div class="program-card"><div class="program-card__cat">Innovation · 9 min read</div><div class="program-card__title">Pakistan's AI Opportunity: Where Founders Should Focus in 2025</div><p class="program-card__desc">A sector-by-sector breakdown of where AI will reshape Pakistan's economy fastest.</p><div class="program-card__link">Read More →</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRESS PAGE -->
+<div class="page-modal" id="press-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Press & Newsroom</div>
+    <div></div>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">Newsroom</span>
+      <h1 class="page-hero__title">Mindverse360° in<br><span style="color:var(--orange)">The News</span></h1>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <div class="program-card" style="margin-bottom:2rem;border-color:var(--orange)">
+        <div class="program-card__cat">Official Press Release · April 2025</div>
+        <div class="program-card__title" style="font-size:1.5rem">Mindverse360° Launches Pakistan's First Integrated Entrepreneurial, Leadership & Innovation Ecosystem</div>
+        <p class="program-card__desc">LAHORE, Pakistan — Mindverse360° today officially announced the launch of Pakistan's first fully integrated ecosystem designed to transform technical talent into founders, builders, and leaders through structured programs, venture building, and market-ready product creation.</p>
+        <p class="program-card__desc" style="margin-top:1rem">The platform brings together entrepreneurs, students, investors, and corporate partners under a unified structure designed to close the gap between talent and opportunity in Pakistan...</p>
+        <div class="program-card__link" style="margin-top:1.5rem">Download Full Press Release →</div>
+      </div>
+      <h3 style="margin-bottom:1.5rem;font-family:var(--font-display)">Media Coverage</h3>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="event-item"><div style="font-size:1.5rem">📰</div><div class="event-info"><div class="event-item-title">Dawn — "The Ecosystem Building Pakistan's Next Generation of Founders"</div><div class="event-item-type">April 2025</div></div></div>
+        <div class="event-item"><div style="font-size:1.5rem">📺</div><div class="event-info"><div class="event-item-title">Geo News — "Pakistan's Innovation Hub Launches Nationwide"</div><div class="event-item-type">April 2025</div></div></div>
+        <div class="event-item"><div style="font-size:1.5rem">💻</div><div class="event-info"><div class="event-item-title">TechJuice — "Mindverse360° Set to Disrupt Pakistan's Startup Landscape"</div><div class="event-item-type">March 2025</div></div></div>
+      </div>
+    </div>
+    <div class="content-section">
+      <h3 style="font-family:var(--font-display);margin-bottom:1rem">Media Inquiries</h3>
+      <p style="margin-bottom:1.5rem">For press access, interviews, or media kit requests, contact our communications team.</p>
+      <button class="btn btn-outline" onclick="showPage('contact')">Contact Media Team →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CAREERS PAGE -->
+<div class="page-modal" id="careers-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Careers</div>
+    <div></div>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">Join Our Team</span>
+      <h1 class="page-hero__title">Build the Future<br><span style="color:var(--orange)">With Us</span></h1>
+      <p class="page-hero__desc">We're a lean team of builders, educators, and operators. If you're passionate about Pakistan's future, you belong here.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <h2 style="margin-bottom:2rem;font-size:1.8rem">Open <span style="color:var(--orange)">Positions</span></h2>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="program-card" style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem"><div><div class="program-card__cat">Full-Time · Lahore</div><div class="program-card__title">Program Manager — Founder Accelerator</div><p class="program-card__desc" style="margin:0">Lead cohort operations, mentor coordination, and participant experience for our flagship program.</p></div><button class="btn btn-outline" style="white-space:nowrap">Apply →</button></div>
+        <div class="program-card" style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem"><div><div class="program-card__cat">Full-Time · Remote</div><div class="program-card__title">Content & Storytelling Lead</div><p class="program-card__desc" style="margin:0">Create compelling founder stories, ecosystem narratives, and thought leadership content across all channels.</p></div><button class="btn btn-outline" style="white-space:nowrap">Apply →</button></div>
+        <div class="program-card" style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem"><div><div class="program-card__cat">Full-Time · Lahore</div><div class="program-card__title">Head of Community</div><p class="program-card__desc" style="margin:0">Build and activate Mindverse360°'s founder community across digital and in-person channels nationwide.</p></div><button class="btn btn-outline" style="white-space:nowrap">Apply →</button></div>
+        <div class="program-card" style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem"><div><div class="program-card__cat">Contract · Remote</div><div class="program-card__title">Startup Mentor (Part-Time)</div><p class="program-card__desc" style="margin:0">Guide founders through our accelerator program. 4–6 hours per week. Ideal for experienced operators.</p></div><button class="btn btn-outline" style="white-space:nowrap">Apply →</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY POLICY PAGE -->
+<div class="page-modal" id="privacy-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Privacy Policy</div>
+    <div></div>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <h1 class="page-hero__title">Privacy <span style="color:var(--orange)">Policy</span></h1>
+      <p class="page-hero__desc">Last updated: April 2025</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section" style="max-width:750px;margin:0 auto">
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">1. Information We Collect</h2>
+      <p style="margin-bottom:2rem">We collect information you provide directly (name, email, phone) when applying to programs, subscribing to newsletters, or contacting us. We may also collect analytics data about how you interact with our website.</p>
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">2. How We Use Your Information</h2>
+      <p style="margin-bottom:2rem">Your information is used to process applications, communicate about programs and events, send newsletters (with your consent), and improve our services. We do not sell your personal data to third parties.</p>
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">3. Data Security</h2>
+      <p style="margin-bottom:2rem">We implement industry-standard security measures to protect your personal information. However, no method of transmission over the internet is 100% secure.</p>
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">4. Your Rights</h2>
+      <p style="margin-bottom:2rem">You have the right to access, correct, or delete your personal data at any time. Contact us at privacy@mindverse360.pk to exercise these rights.</p>
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">5. Contact</h2>
+      <p>For privacy inquiries: privacy@mindverse360.pk</p>
+    </div>
+  </div>
+</div>
+
+<!-- TERMS PAGE -->
+<div class="page-modal" id="terms-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Terms & Conditions</div>
+    <div></div>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <h1 class="page-hero__title">Terms & <span style="color:var(--orange)">Conditions</span></h1>
+      <p class="page-hero__desc">Last updated: April 2025</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section" style="max-width:750px;margin:0 auto">
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">1. Acceptance of Terms</h2>
+      <p style="margin-bottom:2rem">By accessing and using Mindverse360°'s website and services, you agree to be bound by these Terms and Conditions.</p>
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">2. Program Participation</h2>
+      <p style="margin-bottom:2rem">Acceptance into any program is at Mindverse360°'s discretion. Participants must comply with all program rules and codes of conduct. Fees paid are non-refundable after the program commencement date.</p>
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">3. Intellectual Property</h2>
+      <p style="margin-bottom:2rem">All content on this website is the property of Mindverse360°. Participants retain full ownership of their own IP created during programs unless otherwise agreed in writing.</p>
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">4. Limitation of Liability</h2>
+      <p style="margin-bottom:2rem">Mindverse360° is not liable for any indirect or consequential damages arising from program participation or use of our services.</p>
+      <h2 style="margin-bottom:1rem;font-size:1.4rem">5. Governing Law</h2>
+      <p>These terms are governed by the laws of Pakistan. Disputes shall be resolved in the courts of Lahore, Punjab.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ECOSYSTEM DETAIL PAGE -->
+<div class="page-modal" id="ecosystem-page">
+  <div class="page-modal__nav">
+    <button class="page-modal__back" onclick="closePage()">← Back</button>
+    <div class="page-modal__title">Ecosystem Overview</div>
+    <button class="btn btn-primary" onclick="showPage('apply')">Apply Now</button>
+  </div>
+  <div class="page-hero">
+    <div class="container" style="text-align:center">
+      <span class="tag page-hero__tag">The Ecosystem</span>
+      <h1 class="page-hero__title">One Platform.<br><span style="color:var(--orange)">Infinite Pathways.</span></h1>
+      <p class="page-hero__desc">Mindverse360° is not a single program. It is a complete ecosystem — designed to support every stage of the founder journey, from first idea to funded venture.</p>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="content-section">
+      <div class="content-grid-3">
+        <div class="program-card"><div class="program-card__icon">🎓</div><div class="program-card__title">Education</div><p class="program-card__desc">Structured learning programs that teach entrepreneurial thinking, product development, and leadership skills.</p></div>
+        <div class="program-card"><div class="program-card__icon">🔬</div><div class="program-card__title">Innovation Labs</div><p class="program-card__desc">Dedicated spaces and programs for ideation, prototyping, and market validation with expert facilitation.</p></div>
+        <div class="program-card"><div class="program-card__icon">🏗️</div><div class="program-card__title">Venture Studio</div><p class="program-card__desc">Co-build market-ready startups with our operators, engineers, designers, and capital network.</p></div>
+        <div class="program-card"><div class="program-card__icon">🤝</div><div class="program-card__title">Mentorship</div><p class="program-card__desc">Access to 100+ mentors — serial entrepreneurs, investors, and industry leaders committed to your growth.</p></div>
+        <div class="program-card"><div class="program-card__icon">💰</div><div class="program-card__title">Capital Access</div><p class="program-card__desc">Connections to angels, VCs, and government grants. Demo days and investor introductions for top founders.</p></div>
+        <div class="program-card"><div class="program-card__icon">🌐</div><div class="program-card__title">Global Network</div><p class="program-card__desc">Connections to international accelerators, partner programs, and global market entry support.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CANVAS PARTICLE ANIMATION ──
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let W, H;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.r = Math.random() * 1.5 + 0.5;
+    this.alpha = Math.random() * 0.4 + 0.1;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,85,0,${this.alpha})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+function drawLines() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(255,85,0,${0.06 * (1 - d/120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawLines();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── MOBILE MENU ──
+function toggleMobile() {
+  document.getElementById('mobile-menu').classList.toggle('active');
+}
+
+// ── MARQUEE SETUP ──
+const partners = ['LUMS', 'IBA Karachi', 'NUST', 'P@SHA', 'Invest2Innovate', 'Tez Financial', 'Systems Ltd', 'Engro Corp', 'Jazz', 'Telenor', 'Arif Habib', 'Karandaaz'];
+function buildMarquee(id, items) {
+  const el = document.getElementById(id);
+  const doubled = [...items, ...items];
+  el.innerHTML = doubled.map(p => `<div class="logo-pill">${p}</div>`).join('');
+}
+buildMarquee('marquee1', partners);
+buildMarquee('marquee2', [...partners].reverse());
+
+// ── REVEAL ON SCROLL ──
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── COUNTER ANIMATION ──
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '+';
+  let current = 0;
+  const step = target / 60;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(timer); }
+    el.textContent = Math.floor(current) + suffix;
+  }, 25);
+}
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(e.target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+
+// ── PAGE NAVIGATION ──
+let pageStack = [];
+
+function showPage(name) {
+  // Close any open modal first
+  document.querySelectorAll('.page-modal.active').forEach(m => {
+    m.classList.remove('active');
+    setTimeout(() => { if (!m.classList.contains('active')) m.style.display = ''; }, 500);
+  });
+
+  const modal = document.getElementById(name + '-page');
+  if (!modal) return;
+
+  modal.style.display = 'block';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      modal.classList.add('active');
+      modal.scrollTop = 0;
+    });
+  });
+
+  pageStack.push(name);
+  window.scrollTo(0, 0);
+}
+
+function closePage() {
+  const modals = document.querySelectorAll('.page-modal.active');
+  modals.forEach(m => {
+    m.classList.remove('active');
+    setTimeout(() => { m.style.display = ''; }, 500);
+  });
+  pageStack = [];
+}
+
+// ── FAQ TOGGLE ──
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+
+// ── ECOSYSTEM NODE INTERACTION ──
+document.querySelectorAll('.eco-node').forEach((node, i) => {
+  node.addEventListener('click', () => {
+    document.querySelectorAll('.eco-circle').forEach(c => c.classList.remove('active'));
+    node.querySelector('.eco-circle').classList.add('active');
+  });
+});
+
+// ── NEWSLETTER FORM ──
+document.querySelector('.newsletter__form button').addEventListener('click', function() {
+  const input = this.previousElementSibling;
+  if (input.value && input.value.includes('@')) {
+    this.textContent = '✓ Subscribed!';
+    this.style.background = '#22c55e';
+    input.value = '';
+    setTimeout(() => { this.textContent = 'Subscribe →'; this.style.background = ''; }, 3000);
+  } else {
+    input.style.borderColor = 'var(--orange)';
+    input.focus();
+  }
+});
+
+console.log('🚀 Mindverse360° — Building Pakistan\'s Future Founders');
+</script>
+</body>
+</html>

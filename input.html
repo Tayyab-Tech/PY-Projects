@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Input Label</title>
+
+    <style>
+        .form{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .inp-div{
+            position: relative;
+        }
+
+        .input{
+            padding: 10px 5px;
+            font-size: 18px;
+            border: 1px solid gray;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .label{
+            position: absolute;
+            left: 10px;
+            top: 8px;
+            font-size: 18px;
+            pointer-events: none;
+            transition: .3s ease;
+            background: white;
+            padding: 0 4px;
+        }
+
+        .input:focus{
+            border:2px solid rgb(0, 17, 255);
+        }
+        .input:focus + .label,
+        .input:not(:placeholder-shown) + .label {
+            transform: translateY(-16px);
+            font-size: 14px;
+            color: blue;
+        }
+    </style>
+
+</head>
+<body>
+
+<form action="" class="form">
+    <div class="inp-div">
+        <input type="text" id="name" class="input" placeholder=" ">
+        <label class="label" for="name">Name</label>
+    </div>
+</form>
+
+</body>
+</html>
